@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Parameters definitions
+ *  Parameters definitions for Cawthron engine for webapp
  */
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 
