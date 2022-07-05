@@ -80,7 +80,24 @@ $_settings = array(
 // Configuracion de la interface de usuarios
     "interface"=>array(
 
-
+        'appname' => "Cawthron-app-Telemetry",
+        'default_language' => 'en_GB',
+        'theme' => "basic",
+        'themecolor' => "blue",
+        'favicon' => "favicon.png",
+        'menucollapses' => false,
+        'show_menu_titles' => true,
+        'default_controller' => "user",
+        'default_action' => "login",
+        'default_controller_auth' => "feed",
+        'default_action_auth' => "list",
+        'feedviewpath' => "vis/auto?feedid=",
+        'enable_multi_user' => false,
+        'enable_rememberme' => true,
+        'enable_password_reset' => false,
+        'enable_admin_ui' => false,
+        'enable_update_ui' => true,
+        'email_verification' => false
     ),
 
     "public_profile"=>array(
