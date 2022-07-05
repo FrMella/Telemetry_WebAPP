@@ -1,18 +1,11 @@
 <?php
+
 /*
- All Emoncms code is released under the GNU Affero General Public License.
- See COPYRIGHT.txt and LICENSE.txt.
-
- ---------------------------------------------------------------------
- Emoncms - open source energy visualisation
- Part of the OpenEnergyMonitor project:
- http://openenergymonitor.org
+ * Logger error implementation, no more than 256MB
  */
+defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 
-// no direct access
-defined('EMONCMS_EXEC') or die('Restricted access');
-
-class EmonLogger
+class CawLogger
 {
     private $logfile = "";
     private $caller = "";
@@ -93,9 +86,8 @@ class EmonLogger
 
         $now = microtime(true);
         $micro = sprintf("%03d", ($now - ($now >> 0)) * 1000);
-        $now = DateTime::createFromFormat('U', (int)$now); // Only use UTC for logs
+        $now = DateTime::createFromFormat('U', (int)$now);
         $now = $now->format("Y-m-d H:i:s").".$micro";
-        // Clear log file if more than 256MB (temporary solution)
         if (filesize($this->logfile)>(1024*1024*256)) {
             $fh = @fopen($this->logfile, "w");
             @fclose($fh);

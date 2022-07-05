@@ -11,11 +11,11 @@ http://openenergymonitor.org
 
 */
 
-define('EMONCMS_EXEC', 1);
+define('CAWTHRON_ENGINE', 1);
 chdir("/var/www/emoncms");
 require "process_settings.php";
-require "Lib/EmonLogger.php";
-$log = new EmonLogger(__FILE__);
+require "libraries/CawLogger.php";
+$log = new CawLogger(__FILE__);
 
 // Connect to mysql
 $mysqli = @new mysqli(
