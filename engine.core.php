@@ -13,6 +13,8 @@
     post : post a http request
     prop:
     request_header: devuelve el encabezado del index
+    version: return de version
+
 
 */
 
@@ -158,22 +160,135 @@ function request_header($index) {
     return $value_return;
 }
 
-function server()   {}
+function server($index)   {
+    $value_return = null;
+    if (isset($_SERVER[$index])) {
+        $value_return = $_SERVER[$index];
+    }
+    return $value_return;
+}
 
-function delete() {}
-function version() {}
+function delete($index) {
+    parse_str(file_get_contents("php://input"), $_DELETE);
+    $value_return = null;
+    if (isset($_DELETE[$index])) {
+        $value_return = $_DELETE[$index];
+    }
 
-function load_db_scheme(){}
+    if (is_array($value_return)) {
+        $value_return = array_map("stripslashes", $value_return);
+    } else {
+        $value_return = stripslashes($value_return);
+    }
+    return $value_return;
+}
 
-function load_menu(){}
+function put($index)
+{
+    parse_str(file_get_contents("php://input"), $_PUT);
+    $value_return = null;
+    if (isset($_PUT[$index])) {
+        $value_return = $_PUT[$index];
+    }
 
-function http_request(){}
+    if (is_array($value_return)) {
+        $value_return = array_map("stripslashes", $value_return);
+    } else {
+        $value_return = stripslashes($value_return);
+    };
+    return $value_return;
+}
 
-function system_error(){}
 
-function call_hook() {}
+function version() {
+    $version_file = json_decode(file_get_contents('./version.json'));
+    return $version_file->version;
+}
 
-function get_client_ip_env() {}
+function load_db_scheme(){
+    $schema = array();
+    $dir = scandir("ext_modules");
+    for ($i=2; $i<count($dir); $i++) {
+        if (filetype("ext_modules/".$dir[$i])=='dir' || filetype("ext_modules/".$dir[$i])=='link') {
+            if (is_file("ext_modules/".$dir[$i]."/".$dir[$i]."_schema.php")) {
+                require "ext_modules/".$dir[$i]."/".$dir[$i]."_schema.php";
+            }
+        }
+    }
+    return $schema;
+}
 
-function generate_secure_key(){}
+function load_menu(){
+
+    global $menu;
+    $dir = scandir("ext_modules");
+    for ($i=2; $i<count($dir); $i++)
+    {
+        if (filetype("ext_modules/".$dir[$i])=='dir' || filetype("ext_odules/".$dir[$i])=='link')
+        {
+            if (is_file("ext_modules/".$dir[$i]."/".$dir[$i]."_menu.php"))
+            {
+                require "ext_modules/".$dir[$i]."/".$dir[$i]."_menu.php";
+            }
+        }
+    }
+}
+
+function http_request($method, $url, $data){
+    $options = array();
+
+    if ($method=="GET") {
+        $urlencoded = http_build_query($data);
+        $url = "$url?$urlencoded";
+    } elseif ($method=="POST") {
+        $options[CURLOPT_POST] = 1;
+        $options[CURLOPT_POSTFIELDS] = $data;
+    }
+
+    $options[CURLOPT_URL] = $url;
+    $options[CURLOPT_RETURNTRANSFER] = 1;
+    $options[CURLOPT_CONNECTTIMEOUT] = 2;
+    $options[CURLOPT_TIMEOUT] = 5;
+
+    $curl = curl_init();
+    curl_setopt_array($curl, $options);
+    $resp = curl_exec($curl);
+    curl_close($curl);
+    return $resp;
+}
+
+function system_error($message){
+    return array("success"=>false, "message"=>$message);
+}
+
+function call_hook($function_name, $args) {
+    $dir = scandir("ext_modules");
+    for ($i=2; $i<count($dir); $i++) {
+        if (filetype("ext_modules/".$dir[$i])=='dir' || filetype("ext_modules/".$dir[$i])=='link') {
+            if (is_file("ext_modules/".$dir[$i]."/".$dir[$i]."_hooks.php")) {
+                require "ext_modules/".$dir[$i]."/".$dir[$i]."_hooks.php";
+                if (function_exists($dir[$i].'_'.$function_name)==true) {
+                    $hook = $dir[$i].'_'.$function_name;
+                    return $hook($args);
+                }
+            }
+        }
+    }
+}
+
+function get_client_ip_env() {
+    $ipaddress = filter_var(getenv('REMOTE_ADDR'), FILTER_VALIDATE_IP);
+    if (empty($ipaddress)) {
+        $ipaddress = '';
+    }
+    return $ipaddress;
+}
+
+function generate_secure_key($length) {
+    if (function_exists('random_bytes')) {
+        return bin2hex(random_bytes($length));
+    } else {
+        return bin2hex(openssl_random_pseudo_bytes($length));
+    }
+}
 
