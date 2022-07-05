@@ -30,7 +30,7 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
     <link href="<?php echo $path; ?>Frontend/css-base.css?v=<?php echo $v; ?>" rel="stylesheet">
     <link href="<?php echo $path; ?>Libraries/menu/menu.css?v=<?php echo $v; ?>" rel="stylesheet">
 
-    <?php include 'Lib/menu/menu_langjs.php' ?>
+    <?php include 'libraries/menu/menu_langjs.php' ?>
 
     <script type="text/javascript" src="<?php echo $path; ?>Libraries/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="<?php echo $path; ?>Libraries/menu/menu.js?v=<?php echo $v; ?>"></script>
