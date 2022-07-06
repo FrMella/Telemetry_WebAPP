@@ -1,16 +1,5 @@
 <?php
-// -----------------------------------------------------
-// Example emoncms settings.php file
-//
-// default-settings.php contains the default settings.
-//
-// Settings entered here override the default settings.
-// Enter only the settings you wish to customise here.
-//
-// The following is a barebones example, copy across
-// other settings from default-settings.php as required
-// Maintain the section structure (items in [])
-// -----------------------------------------------------
+
 
 $settings = array(
 // Set Emoncms installation domain here to secure installation e.g domain = myemoncmsinstall.org

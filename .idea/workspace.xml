@@ -57,12 +57,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/Practice/webAPP-mqtt/emoncms-docker/emoncms",
+    "last_opened_file_path": "E:/Practice/webAPP-mqtt/emoncms-docker",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "mariadb"
+      "mariadb",
+      "mysql"
     ]
   }
 }]]></component>
@@ -84,7 +85,7 @@
       <updated>1656997361788</updated>
       <workItem from="1656997362973" duration="8073000" />
       <workItem from="1657063315744" duration="2375000" />
-      <workItem from="1657072337434" duration="408000" />
+      <workItem from="1657072337434" duration="2241000" />
     </task>
     <servers />
   </component>

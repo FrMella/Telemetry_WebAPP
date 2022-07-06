@@ -50,8 +50,8 @@ if ($settings_error) {
     die;
 }
 
-if (is_dir($settings["cawthron_dir"]."/ext_modules")) {
-    $linked_modules_dir = $settings["cawthron_dir"]."/ext_modules";
+if (is_dir($settings["cawthron_dir"]."/modules")) {
+    $linked_modules_dir = $settings["cawthron_dir"]."/modules";
 } else {
     $linked_modules_dir = $settings["cawthron_dir"];
 }

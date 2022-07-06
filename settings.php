@@ -11,14 +11,14 @@ $_settings = array(
     "display_errors" => true,
 
 // actualiza la base de datos sin autorizacion
-    "updatelogin" => true,
+    "updatelogin" => false,
 
 // configuracion de la base datos SQL
     "sql"=>array(
         "server"   => "localhost",
         "database" => "emoncms",
-        "username" => "emoncms",
-        "password" => "password",
+        "username" => "_DB_USER_",
+        "password" => "_DB_PASSWORD_",
         "port"     => 3306,
         "dbtest"   => true
     ),
