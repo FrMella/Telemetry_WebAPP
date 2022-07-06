@@ -1,21 +1,23 @@
 <?php
+
 /*
  * Processing configuration definitions for Cawthron WebAPP
  */
+
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 
-require_once('Libraries/enum.php');
+require_once('libraries/enumerator.php');
 
 $settings_error = false;
 
 if (file_exists(dirname(__FILE__)."/settings.php")) {
-    //require_once('default-settings.php');
+    require_once('default-settings.php');
     require_once('settings.php');
     if (!isset($settings)) {
-        require_once('Libraries/process_old_settings.php');
-        $settings_error = true;
-        $settings_error_title = "settings file error";
-        $settings_error_message = "need settings.php file";
+        require_once('libraries/process_old_settings.php');
+       // $settings_error = true;
+       // $settings_error_title = "settings file error";
+       // $settings_error_message = "need settings.php file tag1";
     } else {
         $settings = array_replace_recursive($_settings, $settings);
     }
@@ -48,10 +50,10 @@ if ($settings_error) {
     die;
 }
 
-if (is_dir($settings["emoncms_dir"]."/modules")) {
-    $linked_modules_dir = $settings["emoncms_dir"]."/modules";
+if (is_dir($settings["cawthron_dir"]."/ext_modules")) {
+    $linked_modules_dir = $settings["cawthron_dir"]."/ext_modules";
 } else {
-    $linked_modules_dir = $settings["emoncms_dir"];
+    $linked_modules_dir = $settings["cawthron_dir"];
 }
 
 if (isset($settings["display_errors"]) && ($settings["display_errors"])) {

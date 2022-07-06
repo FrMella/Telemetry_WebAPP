@@ -1,5 +1,5 @@
 <?php
-/* Settings app
+/*  Cawthron telemetry app Settings files
  *
  *
  */
@@ -11,19 +11,20 @@ $_settings = array(
     "display_errors" => true,
 
 // actualiza la base de datos sin autorizacion
-    "updatelogin" => false,
+    "updatelogin" => true,
 
 // configuracion de la base datos SQL
     "sql"=>array(
         "server"   => "localhost",
-        "database" => "CawthronDB",
-        "username" => "_DB_USER_",
-        "password" => "_DB_PASSWORD_",
+        "database" => "emoncms",
+        "username" => "emoncms",
+        "password" => "password",
         "port"     => 3306,
         "dbtest"   => true
     ),
 
 // configuracion de la base datos Redis
+// basic setup redis database
     "redis"=>array(
         'enabled' => false,
         'host'    => 'localhost',
@@ -34,6 +35,7 @@ $_settings = array(
     ),
 
 // configuracion del MQTT
+// MQTT basic setup
     "mqtt"=>array(
         'enabled'   => false,
         'host'      => 'localhost',
@@ -47,11 +49,13 @@ $_settings = array(
     ),
 
 // maximo de nodos permitidos
+// MAX allowed nodes setup
     "input"=>array(
         'max_node_id_limit' => 32
     ),
 
 // configuracion de alimentacion
+// feeding system setup
     "feed"=>array(
         'engines_hidden'=>array(
             Engine::MYSQL
@@ -60,6 +64,7 @@ $_settings = array(
         ),
 
         // Configuracion de baja escritura
+        // low write redis configuration
         'redisbuffer'   => array(
             'enabled' => false,
             'sleep' => 60
@@ -78,9 +83,10 @@ $_settings = array(
     ),
 
 // Configuracion de la interface de usuarios
+// configuration user interface
     "interface"=>array(
 
-        'appname' => "Cawthron-app-Telemetry",
+        'appname' => "CawthronApp",
         'default_language' => 'en_GB',
         'theme' => "basic",
         'themecolor' => "blue",
@@ -118,7 +124,9 @@ $_settings = array(
         'username'=>"",
         'password'=>""
     ),
-    // niveles de error: 1=INFORMATION, 2=Warning, 3=ERROR
+    // niveles de error: 1=INFORMATION, 2=WARNING, 3=ERROR
+    // error messages levels :
+    // 1= information, 2=warning, 3=error
     "log"=>array(
         "enabled" => true,
         "location" => "/var/log/Cawthron",

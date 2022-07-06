@@ -1,6 +1,7 @@
 <?php
 /*
- * Router engine implementation
+ * Routea el acceso a la aplicacion y los modulos externos
+ * Router engine implementation routines
  */
 
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');

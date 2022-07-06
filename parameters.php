@@ -3,6 +3,8 @@
 /*
  *  Parameters definitions for Cawthron engine for webapp
  */
+
+
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 
 class Param
@@ -85,7 +87,7 @@ class Param
                 die;
             }
 
-            global $session; // $session variable global
+            global $session;
             $session["write"] = true;
             $session["read"] = true;
             $session["userid"] = $userid;

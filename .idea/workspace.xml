@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f88b677c-031d-44b9-bf55-2b004d8a189e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/default-settings.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/default-settings.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example.settings.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example.settings.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/version.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/CawthronTheme.php" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/CawthronTheme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/default.CawthronPi.settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/default.CawthronPi.settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine.core.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine.core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/CawLogger.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/CawLogger.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/api_tool_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/api_tool_view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/cawthron-helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/cawthron-helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/dbschemasetup.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/dbschemasetup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/email.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/email.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/enum.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/gridjs/grid-demo.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/gridjs/grid-demo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/load_emoncms.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/menu/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/menu/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/process_old_settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/process_old_settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/responsive-linked-tables.js" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/responsive-linked-tables.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/units.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/units.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/user_locale.js" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/user_locale.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/vis.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/vis.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters.php" beforeDir="false" afterPath="$PROJECT_DIR$/parameters.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpinfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpinfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processing-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/processing-config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.php" beforeDir="false" afterPath="$PROJECT_DIR$/router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2BVhrtqcTvX0Z2n3llYAOJFA7XG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/Practice/webAPP-mqtt/emoncms-docker/emoncms",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Practice\webAPP-mqtt\emoncms-docker\emoncms" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Practice\webAPP-mqtt\emoncms-docker\emoncms" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f88b677c-031d-44b9-bf55-2b004d8a189e" name="Changes" comment="" />
+      <created>1656997361788</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1656997361788</updated>
+      <workItem from="1656997362973" duration="8073000" />
+      <workItem from="1657063315744" duration="2375000" />
+      <workItem from="1657072337434" duration="408000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/libraries/gridjs/grid-demo.php</url>
+          <line>144</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

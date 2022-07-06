@@ -1,23 +1,17 @@
 <?php
 /*
-
-All Emoncms code is released under the GNU Affero General Public License.
-See COPYRIGHT.txt and LICENSE.txt.
-
----------------------------------------------------------------------
-Emoncms - open source energy visualisation
-Part of the OpenEnergyMonitor project:
-http://openenergymonitor.org
-
-*/
+ * Load routines for setting-up app
+ * Carga las rutina para inicializar la aplicacion
+ */
 
 define('CAWTHRON_ENGINE', 1);
 chdir("/var/www/emoncms");
-require "process_settings.php";
+require "processing_config.php";
 require "libraries/CawLogger.php";
 $log = new CawLogger(__FILE__);
 
 // Connect to mysql
+// conecta a la base de datos
 $mysqli = @new mysqli(
     $settings["sql"]["server"],
     $settings["sql"]["username"],
@@ -32,6 +26,7 @@ if ($mysqli->connect_error) {
 }
 
 // Connect to redis
+// conecta a redis
 if ($settings['redis']['enabled']) {
     $redis = new Redis();
     if (!$redis->connect($settings['redis']['host'], $settings['redis']['port'])) {
@@ -47,11 +42,10 @@ if ($settings['redis']['enabled']) {
     $redis = false;
 }
 
-// Default userid 
-$userid = 1;
+$userid = 1; //Numero admin en la base de datos // default number of user admin in the database
 
-require("Modules/user/user_model.php");
+require("ext_modules/user/user_model.php");
 $user = new User($mysqli,$redis,null);
 
-require_once "Modules/feed/feed_model.php";
+require_once "ext_modules/feed/feed_model.php";
 $feed = new Feed($mysqli,$redis,$settings['feed']);

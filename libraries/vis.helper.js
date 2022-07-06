@@ -6,7 +6,7 @@ var view =
   pan_speed:0.2,
   limit_x:true,
   
-  // Used by multigraph
+  // todo: implementar esto para la funcion de multiples graficos
   'ymin':null,
   'ymax':null,
   'y2min':null,
@@ -57,8 +57,8 @@ var view =
 
   'timewindow':function(time)
   {
-    this.start = ((new Date()).getTime())-(3600000*24*time);    //Get start time
-    this.end = (new Date()).getTime();    //Get end time
+    this.start = ((new Date()).getTime())-(3600000*24*time);
+    this.end = (new Date()).getTime();
   },
 
   'calc_interval':function(npoints=600, min_interval=10)
@@ -126,8 +126,8 @@ function stats(data)
     var val = null;
     for (var z in data)
     {
-        var val = data[z][1];                        // 1) only calculated based on present values
-        // if (data[z][1]!=null) val = data[z][1];   // 2) if value is missing use last value
+        var val = data[z][1];
+        // if (data[z][1]!=null) val = data[z][1];
         
         if (val!=null) 
         {
@@ -174,10 +174,11 @@ function stats(data)
 }
 
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values/901144#901144
+
 var urlParams;
 (window.onpopstate = function () {
     var match,
-        pl = /\+/g, // Regex for replacing addition symbol with a space
+        pl = /\+/g,// REGEX para reemplazar el agregar simbolo con espacio
         search = /([^&=]+)=?([^&]*)/g,
         decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
         query = window.location.search.substring(1);

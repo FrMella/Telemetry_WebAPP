@@ -14,7 +14,7 @@ if(!document.currentScript) {
 }
 
 var path = (function() {
-    const filePath = "Libraries/emoncms.js"
+    const filePath = "libraries/cawthron-helper.js"
     var _path = document.currentScript.dataset.path
 
     function getPathFromScript(src) {
@@ -64,7 +64,7 @@ window.onerror = function(msg, source, lineno, colno, error) {
                 }
             }
             var messages = [
-                "Cawthron telemetry service  Error",
+                "Cawthron telemetry service Error messages:",
                 '-------------',
                 "Message: " + msg,
                 "Route: " + maskedSource.replace(path,""),

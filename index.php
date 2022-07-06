@@ -1,6 +1,6 @@
 <?php
 /*
- *  #### Cawthron index definition and functions ###
+ *  #### Cawthron index definition and functions, software startup scripts ###
  *
  */
 
@@ -15,11 +15,11 @@ require "parameters.php";
 
 $cawthron_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write " : "") . version();
 
-$path = get_application_path($settings["domain"]);
+$path = get_app_path($settings["domain"]);
 $sidebarFixed = true;
 
-require "Libraries/CawthronLogger.php";
-$log = new CawthronLogger(__FILE__);
+require "Libraries/CawLogger.php";
+$log = new CawLogger(__FILE__);
 
 if ($settings['redis']['enabled']) {
     if (!extension_loaded('redis')) {
@@ -85,7 +85,7 @@ if (!$mysqli->connect_error && $settings["sql"]["dbtest"]==true) {
     }
 }
 
-require("Modules/user/user_model.php");
+require("ext_modules/user/user_model.php");
 $user = new User($mysqli, $redis);
 
 $apikey = false;
@@ -116,7 +116,7 @@ if ($apikey) {
         $log->error("Invalid API key | ".$_SERVER["REMOTE_ADDR"]);
         exit();
     }
-} elseif ($devicekey && (@include "Modules/device/device_model.php")) {
+} elseif ($devicekey && (@include "ext_modules/device/device_model.php")) {
     $device = new Device($mysqli, $redis);
     $session = $device->devicekey_session($devicekey);
     if (empty($session)) {
@@ -148,7 +148,7 @@ if ($route->controller=="describe") {
     if ($redis && $redis->exists("describe")) {
         $type = $redis->get("describe");
     } else {
-        $type = 'emoncms';
+        $type = 'cawthron';
     }
     echo $type;
     die;
@@ -170,7 +170,7 @@ if (get('embed')==1) {
 if ($route->isRouteNotDefined()) {
     if ($settings["interface"]["enable_admin_ui"]) {
         if (file_exists("Modules/setup")) {
-            require "Modules/setup/setup_model.php";
+            require "ext_modules/setup/setup_model.php";
             $setup = new Setup($mysqli);
             if ($setup->status()=="unconfigured") {
                 $settings["interface"]["default_controller"] = "setup";
@@ -283,7 +283,7 @@ if ($route->format == 'json') {
     } else {
         header('Content-Type: application/json');
         if (!empty($output['message'])) {
-            header(sprintf('X-emoncms-message: %s', $output['message']));
+            header(sprintf('X-CAW-message: %s', $output['message']));
         }
         print json_encode($output['content']);
         if (json_last_error()!=JSON_ERROR_NONE) {
@@ -311,7 +311,7 @@ if ($route->format == 'json') {
     }
 } else if ($route->format == 'html') {
     if ($embed == 1) {
-        print view("Theme/embed.php", $output);
+        print view("Frontend/embed.php", $output);
     } else {
         $menu = array();
         $menu["setup"] = array("name"=>"Setup", "order"=>1, "icon"=>"menu", "default"=>"feed/view", "l2"=>array());
@@ -329,7 +329,7 @@ if ($route->format == 'json') {
         } else {
             if (!in_array("manual",$output['page_classes'])) $output['page_classes'][] = 'auto';
         }
-        print view("Theme/theme.php", $output);
+        print view("Frontend/Cawthrontheme.php", $output);
     }
 
 } elseif ($route->format == 'text') {
