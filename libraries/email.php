@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Crea emails usando SwiftMailer e informa problemas a la rutina cawlogger
+ * Build emails using SwiftMailer and saves log messages error to cawlogger
+ */
 
 class Email
 {
@@ -10,7 +13,7 @@ class Email
     function __construct()
     {
         global $settings, $linked_modules_dir;
-        $this->log = new EmonLogger(__FILE__);
+        $this->log = new CawLogger(__FILE__);
 
         $this->message = null;
 

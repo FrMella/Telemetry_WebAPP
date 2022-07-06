@@ -107,11 +107,11 @@
 
 
     
-    <script src="/emoncms/Lib/vue.min.js"></script>
-    <script src="/emoncms/Lib/jquery-1.11.3.min.js"></script>
-    <script src="/emoncms/Lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/emoncms/Modules/dashboard/dashboard.js"></script>
-    <script src="/emoncms/Lib/misc/gettext.js"></script>
+    <script src="/emoncms/libraries/vue.min.js"></script>
+    <script src="/emoncms/libraries/jquery-1.11.3.min.js"></script>
+    <script src="/emoncms/libraries/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/emoncms/ext_modules/dashboard/dashboard.js"></script>
+    <script src="/emoncms/libraries/misc/gettext.js"></script>
     <script>
         /**
          * return plain js object with gettext translated strings
@@ -151,11 +151,9 @@
 
 <!-- PAGE SPECIFIC SCRIPTS -->
 <script>
-    // remove this when integrated into emoncms path already a global variable
     var path = "http://localhost/emoncms/";
     var _DEBUG_ = false;
     Vue.config.productionTip = false;
-    // filter available to all compenonets
     Vue.filter('capitalize', function(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     });

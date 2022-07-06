@@ -1,4 +1,9 @@
 <?php
+/*
+ * This function build a json with units to be used in the main app
+ * Esta funcion codifica en JSON una lista de unidades para ser usadas en la APP principal
+ */
+
 
 namespace cawthron\units;
 
@@ -34,5 +39,5 @@ if (array_search(__FILE__, $includes)>0) {
 } else {
 
     header('Content-Type: application/json');
-    echo json_encode($config['units'], JSON_UNESCAPED_UNICODE);    // this script is being included by another
+    echo json_encode($config['units'], JSON_UNESCAPED_UNICODE);
 }

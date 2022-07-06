@@ -1,1 +1,5 @@
 <?php
+
+/* ###  result phpinfo ### */
+phpinfo();
+

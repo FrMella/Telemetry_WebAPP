@@ -1,7 +1,6 @@
 (function(user, callback){
     if (!user) return;
 
-    // rework to fit the momentjs naming scheme for the locale files
     momentjs_locales = {
         da_DK:'da',
         nl_BE:'nl-be',

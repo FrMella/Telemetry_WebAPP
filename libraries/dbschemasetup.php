@@ -1,7 +1,8 @@
 <?php
 
 /*
- * Dabase schema definition
+ * Database schema definition and unittest
+ * esquema de la base de datos y pruebas unitarias
  */
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 

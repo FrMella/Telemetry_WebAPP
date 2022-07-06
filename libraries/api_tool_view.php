@@ -1,14 +1,14 @@
 <?php 
 
 
-defined('EMONCMS_EXEC') or die('Restricted access');
+defined('CAWTHRON_ENGINE') or die('Restricted access');
 global $user, $path, $session;
 $apikey_read = $user->get_apikey_read($session['userid']);
 $apikey_write = $user->get_apikey_write($session['userid']);
 
 bindtextdomain("lib_messages",__DIR__."/locale");
 ?>
-<script src="<?php echo $path; ?>Lib/vue.min.js"></script>
+<script src="<?php echo $path; ?>libraries/vue.min.js"></script>
 <style>[v-cloak] { display: none; }</style>
 
 <h3><?php echo $title; ?></h3>
@@ -85,10 +85,6 @@ bindtextdomain("lib_messages",__DIR__."/locale");
 
 var apikey_read = "<?php echo $apikey_read; ?>";
 var apikey_write = "<?php echo $apikey_write; ?>";
-
-// ---------------------------------------------------------------------
-// Fetch feeds to create dropdown feed selector
-// ---------------------------------------------------------------------
 var feeds = [];
 var nodes = {};
 var selected_feed = 0;
@@ -123,9 +119,7 @@ for (var i in api) {
     }
 }
 
-// ---------------------------------------------------------------------
-// Vue.js definition
-// ---------------------------------------------------------------------
+// Vue.js definition // vue.js definicion
 var app = new Vue({
     el: '#app',
     data: {
@@ -159,26 +153,18 @@ var app = new Vue({
     }
 });
 
-// ---------------------------------------------------------------------
-// Build URL and get response
-// ---------------------------------------------------------------------
 build_url();
 if (api[app.selected_api].mode == "read") {
     get_response();
 }
 
 function build_url() {
-    // Host path and api path
     api[app.selected_api].url = path+api[app.selected_api].path;
-    
-    // Compile parameters
     var parameter_array = []
     for (var p in api[app.selected_api].parameters) {
         var param = api[app.selected_api].parameters[p];
         var value = "";
-        // apply default value if available
         if (param.default != undefined) value = param.default;
-        // apply selected feed if type is feed
         if (param.type != undefined && param.type == "feed") {
             value = app.selected_feed
         }
@@ -192,8 +178,7 @@ function build_url() {
             parameter_array.push("apikey="+apikey_write); 
         }
     }
-    
-    // Add parameters to URL
+
     if (parameter_array.length) {
         api[app.selected_api].url += "?"+parameter_array.join("&");
     }

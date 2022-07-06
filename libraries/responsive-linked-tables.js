@@ -1,13 +1,10 @@
-/**
- * mark toggle button as opened if all accordions are opened
- * 
- * @parm {bool} state == true if all visible
+/*
+   ****
  */
 function setExpandButtonState(state){
     if(typeof state == 'undefined') return
     $container = $('#table')
     $btn_expand = $('#expand-collapse-all')
-    // set the icon and button title based on state (true == open)
     $icon_expand = $btn_expand.find('.icon')
     $icon_expand
       .toggleClass('icon-resize-small', state)
@@ -17,27 +14,19 @@ function setExpandButtonState(state){
 }
 function expandAllNodes(state){
     $container = $('#table')
-    // true if all expanded
     if (typeof state == 'undefined') state = $container.find('.collapsed').length == 0
     $container.find('.collapse').collapse(state ? 'hide':'show')
 }
 
 $(function() {
-    // toggle-able show/hide button to expand/hide all the collapsable items
     $container = $('#table')
     $btn_expand = $('#expand-collapse-all')
     $icon_expand = $btn_expand.find('.icon')
 
-    // collapse or expand all nodes
     $btn_expand.on('click', function(){
         expandAllNodes()
     })
-
-    // once accordion has finished opening or closing check if all are open and change the button
-    // saves the state to local storage to recall on next page load
     save_node_state_timeout = null
-    // store the state once animation finished
-    //data-toggle="collapse"
 
     $(document).on("shown hidden", '#table .tbody.collapse', function(e){
     	$header = $('[data-target="#'+e.target.id+'"]')
@@ -51,38 +40,27 @@ $(function() {
         state = $container.find('.collapsed').length == 0
         setExpandButtonState(state)
 
-        // debounce the call to save the current state to a local storage (cookie)
         clearTimeout(save_node_state_timeout)
         save_node_state_timeout = setTimeout(function(){
-            // docCookies.setItem(local_cache_key, JSON.stringify(nodes_display));
         },100)
     })
-    // record the state change before animation starts
+
     $(document).on('hide show', '#table .tbody.collapse', function(event){
         nodes_display[event.target.dataset.node] = event.type == 'show'
     })
-    // select/de-select all node checkboxes
     $('#select-all').on('click',function(){
-        // state = true if all selected
         $this = $(this)
         state = $this.data('state') != false
-        // remember the original title
         $this.data('title-original', $this.data('title-original') ? $this.data('title-original') : $this.attr('title'))
-        // show different icon on state change
         $this.find('.icon').toggleClass('icon-ban-circle', state)
         $this.find('.icon').toggleClass('icon-check', !state)
-        // make the selection with custom event handler
         $("#table .select input[type='checkbox']").prop('checked', state).trigger('select').trigger('change')
-        // set the title
         title = state ? $this.data('alt-title') : $this.data('title-original')
         $this.attr('title', title)
-        // flip the toggle state
         $this.data('state',!state)
-        // expand all accordions if chosen to select all
         if (state===true) expandAllNodes(false)
     })
     
-    // stop accordion from collapsing if any feeds selected within the node
     $('#table').change('.feed-select', function(e) {
         let $parent = $(e.target).parents('.collapse')
         let id = $parent.attr('id')
@@ -95,8 +73,6 @@ $(function() {
         }
     })
 
-    // @todo: not yet implemented. ui element not chosen on to trigger this action
-        // select or deselect all the checkboxes for a node
         function selectAllInNode(e){
             e.preventDefault()
             e.stopPropagation()
@@ -104,19 +80,14 @@ $(function() {
             $container.find('.collapse').collapse('show')
             $inputs = $container.find(':checkbox')
             $selected = $container.find(':checkbox:checked')
-            // use a custom trigger so not to confuse with the click event
-            // if all selected de-select else select all
             $inputs.prop('checked', $inputs.length != $selected.length).trigger('select')
         }
-        // check / clear all selection
         // $(document).on('click','.input-list .has-indicator', selectAllInNode)
         
-        // feed list view already makes use of the click event
         // $(document).on('mouseup','.feed-list .has-indicator', selectAllInNode)
 });
 
 
-// Calculate and color updated time
 function list_format_updated(time) {
     var fv = list_format_updated_obj(time);
     return "<span class='last-update' style='color:" + fv.color + ";'>" + fv.value + "</span>";
@@ -164,158 +135,115 @@ function list_format_value(value) {
     return value;
 }
 
-/**
-* Resize all the columns to the same width
-*
-* add data-col-padding="[width]" to any element you want additional padding to
-* add data-col-width="[width]" to any element to fix it's column's width
-*/
+
 function autowidth($container) {
-    let widths = {}, // only store widest column values against each selector
-    default_padding = 20;
-    // resize columns based on columns in tbody and thead
-    $container.find("[data-col]").each(function() {
+    let widths = {},
+        default_padding = 20;
+    $container.find("[data-col]").each(function () {
         let $this = $(this),
-        padding = $this.data("col-padding") || default_padding,
-        width = $this.width() + padding,
-        col = $this.data("col");
-        
-        // save the col and largest width for all the columns
+            padding = $this.data("col-padding") || default_padding,
+            width = $this.width() + padding,
+            col = $this.data("col");
+
         widths[col] = widths[col] || 0;
-        
+
         if (width > widths[col] || width == "auto") {
             widths[col] = width;
         }
     });
-    
-    // thead
-    // set a fix width column if [data-col-width] is set in the first row
-    $container.find(".thead [data-col]").each(function() {
+
+    $container.find(".thead [data-col]").each(function () {
         let $this = $(this),
-        col = $this.data("col");
-        // "auto" uses up remainder of space
+            col = $this.data("col");
         // @see: onResize()
         if ($this.data("col-width")) {
-            // overwrite list of widths
             widths[col] = $this.data("col-width");
         }
     });
-    
-    // resize each column to the largest width
+
     for (col in widths) {
         if (widths[col] != "auto") {
             $('[data-col="' + col + '"]').width(widths[col]);
         }
     }
-    onResize(); // redraw columns if they overlap
-}
+    onResize();
 
-/**
-* responsive show/hide columns on window resize
-*
-* requires that all the columns are already set to the same width
-* @see autowidth()
-*
-* read all columns with a data-col attribute
-* sorts the value a-z
-* hides the columns if not enough room (oldest first)
-*/
-function onResize() {
-    // only take the first row for comparison as autowidth() should have already resized the columns
-    let $container = $("#table"),
-    $row = $container.find(".thead:first"),
-    rowWidth = $row.width(), // total available space
-    columnsWidth = 0, // increments for each column
-    hidden = {},
-    cols = {},
-    min_auto_width = 200
-    
-    // get a list of all the columns
-    $row.find("[data-col]").each(function() {
-        let $col = $(this);
-        cols[$col.data("col")] = $col;
-    });
-    // sort columns in order to hide first
-    keys = Object.keys(cols).sort();
-    
-    // columnsWidth += remainder
-    // check if each column fits the width, add to hidden list if not
-    for (k in keys) {
-        // let $col = order[keys[s]]
-        let $col = cols[keys[k]];
-        if ($col.data("col-width") != "auto") {
-            columnsWidth += $col.outerWidth(); // includes padding
-        }
-        // if this column is too wide add to hidden list
-        if (keys[k] !== keys[0]) hidden[keys[k]] = columnsWidth > rowWidth;
-    }
-    // resize all divs in the "auto" column
-    var remainder = rowWidth - columnsWidth,
-    numberOfNodes = $container.find(".node").length,
-    numberOfAutocolumns = parseInt(
-        $('.thead [data-col-width="auto"]').length / numberOfNodes
-    ),
-    r = parseInt(remainder / numberOfAutocolumns); // allow for multiple "auto" columns
-    
-    // if "auto" column les than min width hide it
-    $container.find('.thead [data-col-width="auto"]').each(function() {
-        let col = $(this).data("col")
-        $container.find('[data-col="' + col + '"]').width(r-10);
-        hidden[col] = remainder < min_auto_width;
-    });
-    
-    //show all, then hide relevant columns
-    $("[data-col]").show();
-    for (key in hidden) {
-        if (hidden[key]) $('[data-col="' + key + '"]').hide();
-    }
-}
-/**
-*
-* @param {Function} callback function to call after callback delay
-* @param {int} timeout ms to wait
-*/
-function watchResize(callback, timeout) {
-    // exit if callback not a function
-    if (typeof callback == "undefined" || !(callback instanceof Function)) return;
-    timeout = timeout || 50; // defaults to 50ms
-    
-    var resizeTimer;
-    // debounce (ish) script to improve performance
-    $(window).on("resize", function(e) {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            // resize the columns to fit the view
-            callback();
+    function onResize() {
+        let $container = $("#table"),
+            $row = $container.find(".thead:first"),
+            rowWidth = $row.width(),
+            columnsWidth = 0,
+            hidden = {},
+            cols = {},
+            min_auto_width = 200
+
+        $row.find("[data-col]").each(function () {
+            let $col = $(this);
+            cols[$col.data("col")] = $col;
         });
-    });
-}
+        keys = Object.keys(cols).sort();
 
-function list_format_size(bytes) {
-    if (!$.isNumeric(bytes)) {
-        return "n/a";
-    } else if (bytes < 1024) {
-        return bytes + "B";
-    } else if (bytes < 1024 * 100) {
-        return (bytes / 1024).toFixed(1) + "KB";
-    } else if (bytes < 1024 * 1024) {
-        return Math.round(bytes / 1024) + "KB";
-    } else if (bytes <= 1024 * 1024 * 1024) {
-        return Math.round(bytes / (1024 * 1024)) + "MB";
-    } else {
-        return (bytes / (1024 * 1024 * 1024)).toFixed(1) + "GB";
-    }
-}
+        for (k in keys) {
+            // let $col = order[keys[s]]
+            let $col = cols[keys[k]];
+            if ($col.data("col-width") != "auto") {
+                columnsWidth += $col.outerWidth(); // includes padding
+            }
+            if (keys[k] !== keys[0]) hidden[keys[k]] = columnsWidth > rowWidth;
+        }
+        var remainder = rowWidth - columnsWidth,
+            numberOfNodes = $container.find(".node").length,
+            numberOfAutocolumns = parseInt(
+                $('.thead [data-col-width="auto"]').length / numberOfNodes
+            ),
+            r = parseInt(remainder / numberOfAutocolumns);
 
-/**
-* alter the Number primitive to include a new method to pad out numbers with zeros
-* @param int size - number of characters to fill with zeros
-* @return string
-*/
-Number.prototype.pad = function(size) {
-    var s = String(this);
-    while (s.length < (size || 2)) {
-        s = "0" + s;
+        $container.find('.thead [data-col-width="auto"]').each(function () {
+            let col = $(this).data("col")
+            $container.find('[data-col="' + col + '"]').width(r - 10);
+            hidden[col] = remainder < min_auto_width;
+        });
+
+        $("[data-col]").show();
+        for (key in hidden) {
+            if (hidden[key]) $('[data-col="' + key + '"]').hide();
+        }
     }
-    return s;
-};
+
+    function watchResize(callback, timeout) {
+        if (typeof callback == "undefined" || !(callback instanceof Function)) return;
+        timeout = timeout || 50; // en milisegundos
+
+        var resizeTimer;
+        $(window).on("resize", function (e) {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                callback();
+            });
+        });
+    }
+
+    function list_format_size(bytes) {
+        if (!$.isNumeric(bytes)) {
+            return "n/a";
+        } else if (bytes < 1024) {
+            return bytes + "B";
+        } else if (bytes < 1024 * 100) {
+            return (bytes / 1024).toFixed(1) + "KB";
+        } else if (bytes < 1024 * 1024) {
+            return Math.round(bytes / 1024) + "KB";
+        } else if (bytes <= 1024 * 1024 * 1024) {
+            return Math.round(bytes / (1024 * 1024)) + "MB";
+        } else {
+            return (bytes / (1024 * 1024 * 1024)).toFixed(1) + "GB";
+        }
+    }
+
+    Number.prototype.pad = function (size) {
+        var s = String(this);
+        while (s.length < (size || 2)) {
+            s = "0" + s;
+        }
+        return s;
+    };
+}

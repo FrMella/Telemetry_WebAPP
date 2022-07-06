@@ -1,8 +1,10 @@
 <?php
 
 /*
- * Logger error implementation, no more than 256MB
+ * Logger error implementation, logging errors from webapp, no more than 256MB
+ * Guarda errores producidos reportados por las rutinas, el tamano maximo son 256MB
  */
+
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 
 class CawLogger
@@ -10,12 +12,12 @@ class CawLogger
     private $logfile = "";
     private $caller = "";
     private $logenabled = false;
-    private $log_level = 2;
+    private $log_level = 2; // setea por defecto el nivel de advertencia
     public $stout = false;
 
     private $log_levels = array(
-            1 =>'INFO',
-            2 =>'WARN', // default
+            1 =>'Information',
+            2 =>'Warning', // por defecto
             3 =>'ERROR'
         );
 
@@ -26,7 +28,7 @@ class CawLogger
         if (!$settings['log']['enabled']) {
             $this->logenabled = false;
         } else {
-            $this->logfile = $settings['log']['location']."/emoncms.log";
+            $this->logfile = $settings['log']['location']."/cawlogger.log";
             if ($settings['log']['level']) {
                 $this->log_level = $settings['log']['level'];
             }
@@ -51,14 +53,14 @@ class CawLogger
     public function info($message)
     {
         if ($this->log_level <= 1) {
-            $this->write("INFO", $message);
+            $this->write("Information", $message);
         }
     }
 
     public function warn($message)
     {
         if ($this->log_level <= 2) {
-            $this->write("WARN", $message);
+            $this->write("Warning", $message);
         }
     }
 

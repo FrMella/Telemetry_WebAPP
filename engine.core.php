@@ -21,9 +21,9 @@
 defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
 
 function is_http_request() {
-    if (server('HTTPS') == 'on' {
+    if (server('HTTPS') == 'on') {
         return true;
-    } elseif (server('HTTP_X_FORWARDED_PROTOCOL') == "https") {
+    } elseif (server('HTTP_X_FORWARDED_PROTO') == "https") {
         return true;
     } elseif (server('HTTP_X_FORWARDED_PROTO') == "https") {
         return true;
@@ -61,7 +61,7 @@ function db_check($sql, $database){
     }
 }
 
-function controller ()
+function controller ($controller_name)
 {
     $route_output = array('content'=>EMPTY_ROUTE);
 

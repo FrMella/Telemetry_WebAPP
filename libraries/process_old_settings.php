@@ -1,12 +1,14 @@
 <?php
+/*
+ * todo: reparar el sistema de settings disponible y dejar esta rutina unica de configuracion
+ *
+ */
+
 $settings = array(
 "domain" => isset($domain)?$domain:false,
-"emoncms_dir" => isset($emoncms_dir)?$emoncms_dir:"/home/pi",
-"openenergymonitor_dir" => isset($openenergymonitor_dir)?$openenergymonitor_dir:"/home/pi",
-
+"cawthron_dir" => isset($cawthron_dir)?$cawthron_dir:"/home/pi",
+"Cawthron_dir" => isset($Cawthron_dir)?$Cawthron_dir:"/home/pi",
 "display_errors" => isset($display_errors)?$display_errors:true,
-
-
 "updatelogin" => isset($updatelogin)?$updatelogin:false,
 
 
@@ -19,7 +21,7 @@ $settings = array(
     "dbtest"   => isset($dbtest)?$dbtest:true
 ),
 
-// Redis
+// Redis base de datos
 "redis"=>array(
     'enabled' => isset($redis_enabled)?$redis_enabled:false,
     'host'    => isset($redis_server["host"])?$redis_server["host"]:'localhost',
@@ -62,11 +64,11 @@ $settings = array(
     ),
 
     // Redis Low-write mode
+    // buffer modo de escritura lento
     'redisbuffer'   => array(
         'enabled' => isset($feed_settings["redisbuffer"]["enabled"])?$feed_settings["redisbuffer"]["enabled"]:false,
         'sleep' => isset($feed_settings["redisbuffer"]["sleep"])?$feed_settings["redisbuffer"]["sleep"]:600
     ),
-
 
     'phpfina'       => array('datadir'  => isset($feed_settings["phpfina"]["datadir"])?$feed_settings["phpfina"]["datadir"]:'/var/lib/phpfina/'),
     'phptimeseries' => array('datadir'  => isset($feed_settings["phptimeseries"]["datadir"])?$feed_settings["phptimeseries"]["datadir"]:'/var/lib/phptimeseries/'),
@@ -82,69 +84,34 @@ $settings = array(
         'password'      => isset($feed_settings["mysql"]["password"])?$feed_settings["mysql"]["password"]:null
     ),
     'max_datapoints' => isset($max_datapoints)?$max_datapoints:8928,
-
-
     'csv_decimal_places' => isset($csv_decimal_places)?$csv_decimal_places:2,
-
-
     'csv_decimal_place_separator' => isset($csv_decimal_place_separator)?$csv_decimal_place_separator:".",
-
     'csv_field_separator' => isset($csv_field_separator)?$csv_field_separator:",",
-
     'csv_downloadlimit_mb' => isset($feed_settings["csv_downloadlimit_mb"])?$feed_settings["csv_downloadlimit_mb"]:25
 ),
 
-
 "interface"=>array(
-
     'appname' => isset($appname)?$appname:"emoncms",
-
     'default_language' => isset($default_language)?$default_language:'en_GB',
-
     'theme' => isset($theme)?$theme:"basic",
-    
     'themecolor' => isset($themecolor)?$themecolor:"blue",
-
-
     'favicon' => isset($favicon)?$favicon:"favicon.png",
-
-
     'menucollapses' => isset($menucollapses)?$menucollapses:false,
-    
-
     'show_menu_titles' => isset($show_menu_titles)?$show_menu_titles:true,
-
     'default_controller' => isset($default_controller)?$default_controller:"user",
     'default_action' => isset($default_action)?$default_action:"login",
-
-
     'default_controller_auth' => isset($default_controller_auth)?$default_controller_auth:"feed",
     'default_action_auth' => isset($default_action_auth)?$default_action_auth:"list",
-
-
     'feedviewpath' => isset($feedviewpath)?$feedviewpath:"vis/auto?feedid=",
-
-
     'enable_multi_user' => isset($enable_multi_user)?$enable_multi_user:false,
-
-
     'enable_rememberme' => isset($enable_rememberme)?$enable_rememberme:true,
-
-
     'enable_password_reset' => isset($enable_password_reset)?$enable_password_reset:false,
-
-
     'enable_admin_ui' => isset($allow_emonpi_admin)?$allow_emonpi_admin:false,
-
-
     'enable_update_ui' => isset($admin_show_update)?$admin_show_update:true,
-
-
     'email_verification' => isset($email_verification)?$email_verification:false
 ),
 
 "public_profile"=>array(
-
     'enabled' => isset($public_profile_enabled)?$public_profile_enabled:true,
     'controller' => isset($public_profile_controller)?$public_profile_controller:"dashboard",
     'action' => isset($public_profile_action)?$public_profile_action:"view"
@@ -152,23 +119,19 @@ $settings = array(
 
 "smtp"=>array(
     'default_emailto' => isset($default_emailto)?$default_emailto:'root@localhost',
-    
     'host'=>isset($smtp_email_settings["host"])?$smtp_email_settings["host"]:"smtp.gmail.com",
-
     'port'=>isset($smtp_email_settings["port"])?$smtp_email_settings["port"]:"465",
     'from_email' =>isset($smtp_email_settings["from_email"])?$smtp_email_settings["from_email"]:'noreply@emoncms.org',
     'from_name' =>isset($smtp_email_settings["from_name"])?$smtp_email_settings["from_name"]:'EmonCMS',
-
     'encryption'=>isset($smtp_email_settings["encryption"])?$smtp_email_settings["encryption"]:"ssl",
     'username'=>isset($smtp_email_settings["username"])?$smtp_email_settings["username"]:"yourusername@gmail.com",
     'password'=>isset($smtp_email_settings["password"])?$smtp_email_settings["password"]:"yourpassword"
 ),
 
-// Log file configuration
+// log
 "log"=>array(
     "enabled" => isset($log_enabled)?$log_enabled:true,
-
     "location" => isset($log_location)?$log_location:"/var/log/emoncms",
     "level" => isset($log_level)?$log_level:2
-)
+    )
 );

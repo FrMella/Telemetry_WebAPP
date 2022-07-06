@@ -1,4 +1,9 @@
 <?php
+/* Enumera constantes y variables
+** Enumerator of constants and variables
+
+*/
+
 
 class ProcessArg
 {
@@ -32,11 +37,6 @@ class Engine
     const REDISBUFFER = 9;
     const CASSANDRA = 10;
     
-    /**
-     * returns array of all known engines
-     *
-     * @return array
-     */
     public static function get_all()
     {
         return array(
@@ -53,28 +53,31 @@ class Engine
         'CASSANDRA' => Engine::CASSANDRA
         );
     }
-    
-    /**
-     * returns array of all known engines with descriptions
-     *
-     * @return array
+
+    /*
+     * todo: escribir documentacion de los diferentes motores de procesamiento
+     * todo: agregar nuevos motores de procesamiento
+     * Funcion que describe los motores de procesamiento disponibles.
+     * Function describe the diff processing engines availables
      */
+    
     public static function get_all_descriptive()
     {
         return array(
-            array("id"=>Engine::PHPFINA,"description"=>"Emoncms Fixed Interval TimeSeries"),
-            array("id"=>Engine::PHPTIMESERIES,"description"=>"Emoncms Variable Interval TimeSeries"),
+            array("id"=>Engine::PHPFINA,"description"=>"Fixed Interval TimeSeries"),
+            array("id"=>Engine::PHPTIMESERIES,"description"=>"Variable Interval TimeSeries"),
             array("id"=>Engine::MYSQL,"description"=>"MYSQL TimeSeries"),
-            array("id"=>Engine::MYSQLMEMORY,"description"=>"MYSQL Memory (RAM data lost on power off)"),
+            array("id"=>Engine::MYSQLMEMORY,"description"=>"MYSQL Memory"),
             array("id"=>Engine::CASSANDRA,"description"=>"CASSANDRA TimeSeries")
         );
     }
 
-    /**
-     * returns array of available intervals for fixed interval timeseries engines
-     *
-     * @return array
-     */ 
+    /*
+     * descriptor de los intervalos disponibles
+     * function available intervals
+     * todo: revisar si estos intervalos funcionan con la aplicacion del equipamiento
+     */
+
     public static function available_intervals() 
     {
         return array(
@@ -101,13 +104,6 @@ class Engine
         );
     }
      
-     
-    /**
-     * return true if given $engineid is a known
-     *
-     * @param [int] $engineid
-     * @return boolean
-     */
     public static function is_valid($engineid)
     {
         return in_array($engineid, Engine::get_all());

@@ -11,7 +11,7 @@
     $database = "Cawthron_temp_access"; // database name need to change
     $username = "Cawthron_temp_access"; // user need to change
     $database = "Cawthron_secret_password"; // password need to change
-    $port = "3306"; // default port
+    $port = "3306";
 
     $dbtest = true;
 
@@ -24,8 +24,7 @@
                           'prefix' => 'Cawthron_');
 
     //MQTT configuractions
-    // Suscriber topic format is rx/*
-    //  the Publisher topic format is user
+
 
     $mqtt_enable = true;
     $mqtt_server = array('host' => 'localhost',
