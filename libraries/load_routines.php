@@ -7,8 +7,8 @@
 define('Telemetry_ENGINE', 1);
 chdir("/var/www/emoncms");
 require "processing_config.php";
-require "libraries/CawLogger.php";
-$log = new CawLogger(__FILE__);
+require "libraries/AppLogger.php";
+$log = new AppLogger(__FILE__);
 
 // Connect to mysql
 // conecta a la base de datos

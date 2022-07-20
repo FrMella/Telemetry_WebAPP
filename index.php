@@ -18,8 +18,8 @@ $Telemetry_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write "
 $path = get_app_path($settings["domain"]);
 $sidebarFixed = true;
 
-require "Libraries/CawLogger.php";
-$log = new CawLogger(__FILE__);
+require "Libraries/AppLogger.php";
+$log = new AppLogger(__FILE__);
 
 if ($settings['redis']['enabled']) {
     if (!extension_loaded('redis')) {

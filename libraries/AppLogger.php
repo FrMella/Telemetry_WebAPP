@@ -7,7 +7,7 @@
 
 defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
-class CawLogger
+class AppLogger
 {
     private $logfile = "";
     private $caller = "";
@@ -28,7 +28,7 @@ class CawLogger
         if (!$settings['log']['enabled']) {
             $this->logenabled = false;
         } else {
-            $this->logfile = $settings['log']['location']."/cawlogger.log";
+            $this->logfile = $settings['log']['location']."/AppLogger.log";
             if ($settings['log']['level']) {
                 $this->log_level = $settings['log']['level'];
             }
