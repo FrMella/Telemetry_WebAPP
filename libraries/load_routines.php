@@ -4,7 +4,7 @@
  * Carga las rutina para inicializar la aplicacion
  */
 
-define('CAWTHRON_ENGINE', 1);
+define('Telemetry_ENGINE', 1);
 chdir("/var/www/emoncms");
 require "processing_config.php";
 require "libraries/CawLogger.php";

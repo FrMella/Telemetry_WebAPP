@@ -5,7 +5,7 @@
  */
 
 
-namespace cawthron\units;
+namespace Telemetry\units;
 
 $config['units'] = array(
     array("short" => "W", "long" => "Watt"),

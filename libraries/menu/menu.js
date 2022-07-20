@@ -112,7 +112,7 @@ var menu = {
         });
 
         var menu_title_l2 = menu.obj[menu.active_l1]['name'];
-        if (menu_title_l2=="Setup") menu_title_l2 = "Cawthron";
+        if (menu_title_l2=="Setup") menu_title_l2 = "Telemetry";
         var out = '<h4 class="menu-title-l2"><span>'+menu_title_l2+'</span></h4>';
         for (var z in keys) {
             let l2 = keys[z];

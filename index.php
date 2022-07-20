@@ -1,11 +1,11 @@
 <?php
 /*
- *  #### Cawthron index definition and functions, software startup scripts ###
+ *  #### Telemetry index definition and functions, software startup scripts ###
  *
  */
 
 
-define('CAWTHRON_ENGINE', 1);
+define('Telemetry_ENGINE', 1);
 
 require "processing-config.php";
 require "engine.core.php";
@@ -13,7 +13,7 @@ require "router.php";
 require "parameters.php";
 
 
-$cawthron_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write " : "") . version();
+$Telemetry_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write " : "") . version();
 
 $path = get_app_path($settings["domain"]);
 $sidebarFixed = true;
@@ -148,7 +148,7 @@ if ($route->controller=="describe") {
     if ($redis && $redis->exists("describe")) {
         $type = $redis->get("describe");
     } else {
-        $type = 'cawthron';
+        $type = 'Telemetry';
     }
     echo $type;
     die;
@@ -315,7 +315,7 @@ if ($route->format == 'json') {
     } else {
         $menu = array();
         $menu["setup"] = array("name"=>"Setup", "order"=>1, "icon"=>"menu", "default"=>"feed/view", "l2"=>array());
-        if (!$session["write"]) $menu["setup"]["name"] = "Cawthron";
+        if (!$session["write"]) $menu["setup"]["name"] = "Telemetry";
 
         load_menu();
         $output['menu'] = $menu;
@@ -329,7 +329,7 @@ if ($route->format == 'json') {
         } else {
             if (!in_array("manual",$output['page_classes'])) $output['page_classes'][] = 'auto';
         }
-        print view("Frontend/Cawthrontheme.php", $output);
+        print view("Frontend/Telemetrytheme.php", $output);
     }
 
 } elseif ($route->format == 'text') {

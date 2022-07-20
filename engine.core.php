@@ -2,7 +2,7 @@
 
 <?php
 /*
-    ### Cawthron Telemetry proposal ###
+    ### Telemetry Telemetry proposal ###
     #### Proof of concept engine core ###
     is_http_request: revisa que estas accediendo desde el browser
     get_app_path: busca el inicio del programa
@@ -18,7 +18,7 @@
 
 */
 
-defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
+defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
 function is_http_request() {
     if (server('HTTPS') == 'on') {

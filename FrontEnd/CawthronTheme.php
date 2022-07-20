@@ -4,7 +4,7 @@
  * Frontend theme template & user interface template
  */
 global $settings;
-global $ltime,$path,$cawthron_version,$menu,$session;
+global $ltime,$path,$Telemetry_version,$menu,$session;
 
 $q = ""; if (isset($_GET['q'])) $q = $_GET['q'];
 
@@ -18,7 +18,7 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
-    <title>Cawthron APP - <?php echo $route->controller.' '.$route->action.' '.$route->subaction; ?></title>
+    <title>Telemetry APP - <?php echo $route->controller.' '.$route->action.' '.$route->subaction; ?></title>
     <link rel="shortcut icon" href="<?php echo $path; ?>Theme/<?php echo $settings["interface"]["favicon"]; ?>" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -40,7 +40,7 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
         var current_themecolor = "<?php echo $settings["interface"]["themecolor"]; ?>";
         var current_themesidebar = "dark";
     </script>
-    <script src="<?php echo $path; ?>Libraries/CawthronApp-helper.js?v=<?php echo $v; ?>"></script>
+    <script src="<?php echo $path; ?>Libraries/TelemetryApp-helper.js?v=<?php echo $v; ?>"></script>
     <?php echo $svg_icons; ?>
 
 </head>
@@ -93,8 +93,8 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
     </main>
 </div>
 <div id="footer">
-    <?php echo dgettext('theme_messages','Powered by'); ?>&nbsp;<a href="http://www.cawthron.org.nz" target="_blank" rel="noopener">Cawthron Institute</a>
-    <span> | <a href="https://www.cawthron.org.nz" target="_blank" rel="noopener"><?php echo $cawthron_version; ?></a></span>
+    <?php echo dgettext('theme_messages','Powered by'); ?>&nbsp;<a href="http://www.Telemetry.org.nz" target="_blank" rel="noopener">Telemetry Institute</a>
+    <span> | <a href="https://www.Telemetry.org.nz" target="_blank" rel="noopener"><?php echo $Telemetry_version; ?></a></span>
 </div>
 
 <script type="text/javascript" src="<?php echo $path; ?>Lib/bootstrap/js/bootstrap.js?v=2"></script>

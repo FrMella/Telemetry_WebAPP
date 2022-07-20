@@ -3,8 +3,8 @@
     
 $_settings = array(
 "domain" => false,
-"cawthron_dir" => "/opt/emoncms",
-"CawthronPi_dir" => "/opt/CawthronPi",
+"Telemetry_dir" => "/opt/emoncms",
+"TelemetryPi_dir" => "/opt/TelemetryPi",
 "display_errors" => true,
 "updatelogin" => false,
 
@@ -87,7 +87,7 @@ $_settings = array(
 
 "interface"=>array(
 
-    'appname' => "CawthronAPP",
+    'appname' => "TelemetryAPP",
     'default_language' => 'en_GB',
     'theme' => "basic",
     'themecolor' => "blue",

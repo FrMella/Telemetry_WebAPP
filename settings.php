@@ -1,13 +1,13 @@
 <?php
-/*  Cawthron telemetry app Settings files
+/*  Telemetry telemetry app Settings files
  *
  *
  */
 
 $_settings = array(
     "domain" => false,
-    "CawthronMonitor_dir" => "/opt/CawthronMonitor",
-    "cawthron-monitor-app_dir" => "/opt/cawthron-monitor-app",
+    "TelemetryMonitor_dir" => "/opt/TelemetryMonitor",
+    "Telemetry-monitor-app_dir" => "/opt/Telemetry-monitor-app",
     "display_errors" => true,
 
 // actualiza la base de datos sin autorizacion
@@ -31,7 +31,7 @@ $_settings = array(
         'port'    => 6379,
         'auth'    => '',
         'dbnum'   => '',
-        'prefix'  => 'CawthronDB'
+        'prefix'  => 'TelemetryDB'
     ),
 
 // configuracion del MQTT
@@ -42,7 +42,7 @@ $_settings = array(
         'port'      => 1883,
         'user'      => '',
         'password'  => '',
-        'basetopic' => 'Cawthron',
+        'basetopic' => 'Telemetry',
         'client_id' => 'Cawpy',
         'userid'    => 1,
         'multiuser' => false
@@ -86,7 +86,7 @@ $_settings = array(
 // configuration user interface
     "interface"=>array(
 
-        'appname' => "CawthronApp",
+        'appname' => "TelemetryApp",
         'default_language' => 'en_GB',
         'theme' => "basic",
         'themecolor' => "blue",
@@ -129,7 +129,7 @@ $_settings = array(
     // 1= information, 2=warning, 3=error
     "log"=>array(
         "enabled" => true,
-        "location" => "/var/log/Cawthron",
+        "location" => "/var/log/Telemetry",
 
         "level" => 2
     ),
