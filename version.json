@@ -1,5 +1,5 @@
 {
-  "name"         : "Cawthron telemetry Engine",
+  "name"         : "Telemetry telemetry Engine",
   "version"      : "0.0.1",
   "location"     : "/var/www",
   "branches_available": ["master"]

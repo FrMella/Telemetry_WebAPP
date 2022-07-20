@@ -5,7 +5,7 @@
  * Guarda errores producidos reportados por las rutinas, el tamano maximo son 256MB
  */
 
-defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
+defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
 class CawLogger
 {

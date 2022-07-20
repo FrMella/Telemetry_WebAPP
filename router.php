@@ -4,7 +4,7 @@
  * Router engine implementation routines
  */
 
-defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
+defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
 class Route
 {

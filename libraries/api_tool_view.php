@@ -1,7 +1,7 @@
 <?php 
 
 
-defined('CAWTHRON_ENGINE') or die('Restricted access');
+defined('Telemetry_ENGINE') or die('Restricted access');
 global $user, $path, $session;
 $apikey_read = $user->get_apikey_read($session['userid']);
 $apikey_write = $user->get_apikey_write($session['userid']);

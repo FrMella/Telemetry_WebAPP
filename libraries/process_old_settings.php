@@ -6,8 +6,8 @@
 
 $settings = array(
 "domain" => isset($domain)?$domain:false,
-"cawthron_dir" => isset($cawthron_dir)?$cawthron_dir:"/home/pi",
-"Cawthron_dir" => isset($Cawthron_dir)?$Cawthron_dir:"/home/pi",
+"Telemetry_dir" => isset($Telemetry_dir)?$Telemetry_dir:"/home/pi",
+"Telemetry_dir" => isset($Telemetry_dir)?$Telemetry_dir:"/home/pi",
 "display_errors" => isset($display_errors)?$display_errors:true,
 "updatelogin" => isset($updatelogin)?$updatelogin:false,
 

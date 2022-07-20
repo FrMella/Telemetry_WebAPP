@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Processing configuration definitions for Cawthron WebAPP
+ * Processing configuration definitions for Telemetry WebAPP
  */
 
-defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
+defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
 require_once('libraries/enumerator.php');
 
@@ -50,10 +50,10 @@ if ($settings_error) {
     die;
 }
 
-if (is_dir($settings["cawthron_dir"]."/ext_modules")) {
-    $linked_modules_dir = $settings["cawthron_dir"]."/ext_modules";
+if (is_dir($settings["Telemetry_dir"]."/ext_modules")) {
+    $linked_modules_dir = $settings["Telemetry_dir"]."/ext_modules";
 } else {
-    $linked_modules_dir = $settings["cawthron_dir"];
+    $linked_modules_dir = $settings["Telemetry_dir"];
 }
 
 if (isset($settings["display_errors"]) && ($settings["display_errors"])) {

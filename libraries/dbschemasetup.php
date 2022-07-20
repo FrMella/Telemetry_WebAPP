@@ -4,7 +4,7 @@
  * Database schema definition and unittest
  * esquema de la base de datos y pruebas unitarias
  */
-defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
+defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
 
 function db_schema_diff_datatype($spec, $current)

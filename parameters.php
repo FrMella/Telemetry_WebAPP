@@ -1,11 +1,11 @@
 <?php
 
 /*
- *  Parameters definitions for Cawthron engine for webapp
+ *  Parameters definitions for Telemetry engine for webapp
  */
 
 
-defined('CAWTHRON_ENGINE') or die('RESTRICTED ACCESS');
+defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
 class Param
 {
