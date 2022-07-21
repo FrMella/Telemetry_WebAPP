@@ -6,7 +6,7 @@
 
 defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
-require_once('libraries/enumerator.php');
+require_once('Libraries/enumerator.php');
 
 $settings_error = false;
 
@@ -14,7 +14,7 @@ if (file_exists(dirname(__FILE__)."/settings.php")) {
     require_once('default-settings.php');
     require_once('settings.php');
     if (!isset($settings)) {
-        require_once('libraries/process_old_settings.php');
+        require_once('Libraries/process_old_settings.php');
        // $settings_error = true;
        // $settings_error_title = "settings file error";
        // $settings_error_message = "need settings.php file tag1";
@@ -33,8 +33,8 @@ if (file_exists(dirname(__FILE__)."/settings.php")) {
     }
 } else {
     $settings_error = true;
-    $settings_error_title = "missing settings file";
-    $settings_error_message = "Create a settings.ini file";
+    $settings_error_title = "archivo de configuracion no disponible / missing settings file";
+    $settings_error_message = "No se puede encontrar archivo de configuracion / Can't find settings.ini file";
 }
 
 if ($settings_error) {
@@ -50,10 +50,10 @@ if ($settings_error) {
     die;
 }
 
-if (is_dir($settings["Telemetry_dir"]."/ext_modules")) {
-    $linked_modules_dir = $settings["Telemetry_dir"]."/ext_modules";
+if (is_dir($settings["emoncms_dir"]."/Ext_Modules")) {
+    $linked_modules_dir = $settings["emoncms_dir"]."/Ext_Modules";
 } else {
-    $linked_modules_dir = $settings["Telemetry_dir"];
+    $linked_modules_dir = $settings["emoncms_dir"];
 }
 
 if (isset($settings["display_errors"]) && ($settings["display_errors"])) {

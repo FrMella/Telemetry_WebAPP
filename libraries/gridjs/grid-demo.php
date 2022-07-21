@@ -110,7 +110,7 @@
     <script src="/emoncms/libraries/vue.min.js"></script>
     <script src="/emoncms/libraries/jquery-1.11.3.min.js"></script>
     <script src="/emoncms/libraries/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/emoncms/ext_modules/dashboard/dashboard.js"></script>
+    <script src="/emoncms/Ext_Modules/dashboard/dashboard.js"></script>
     <script src="/emoncms/libraries/misc/gettext.js"></script>
     <script>
         /**

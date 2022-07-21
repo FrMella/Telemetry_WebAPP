@@ -6,19 +6,19 @@
 
 $_settings = array(
     "domain" => false,
-    "TelemetryMonitor_dir" => "/opt/TelemetryMonitor",
-    "Telemetry-monitor-app_dir" => "/opt/Telemetry-monitor-app",
+    "emoncms_dir" => "/opt/emoncms",
+    "openenergymonitor_dir" => "/opt/openenergymonitor",
     "display_errors" => true,
 
 // actualiza la base de datos sin autorizacion
-    "updatelogin" => true,
+    "updatelogin" => false,
 
 // configuracion de la base datos SQL
     "sql"=>array(
         "server"   => "localhost",
-        "database" => "emoncms",
-        "username" => "emoncms",
-        "password" => "password",
+        "database" => "emoncms1",
+        "username" => "_DB_USER_",
+        "password" => "_DB_PASSWORD_",
         "port"     => 3306,
         "dbtest"   => true
     ),
@@ -58,7 +58,7 @@ $_settings = array(
 // feeding system setup
     "feed"=>array(
         'engines_hidden'=>array(
-            Engine::MYSQL
+         Engine::MYSQL
         ,Engine::MYSQLMEMORY
         ,Engine::CASSANDRA
         ),

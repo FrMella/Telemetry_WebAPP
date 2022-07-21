@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Parameters definitions for Telemetry engine for webapp
+ *  Definicion de parametros y funciones
  */
 
 
@@ -51,7 +51,6 @@ class Param
         }
 
         if (isset($_SERVER["CONTENT_TYPE"]) && $_SERVER["CONTENT_TYPE"]=="aes128cbc") {
-            // Fetch authorization header
             if (!isset($_SERVER["HTTP_AUTHORIZATION"])) {
                 echo "missing authorization header";
                 die;
@@ -77,9 +76,7 @@ class Param
             }
 
             $encryptedData = base64_decode(str_replace(array('-','_'), array('+','/'), $base64EncryptedData));
-
             $dataString = @openssl_decrypt(substr($encryptedData, 16), 'AES-128-CBC', hex2bin($apikey), OPENSSL_RAW_DATA, substr($encryptedData, 0, 16));
-
             $hmac2 = hash_hmac('sha256', $dataString, hex2bin($apikey));
 
             if (!hash_equals($hmac1, $hmac2)) {

@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f88b677c-031d-44b9-bf55-2b004d8a189e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/CawthronTheme.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Libraries/load_routines.php" beforeDir="false" afterPath="$PROJECT_DIR$/Libraries/load_routines.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/default-settings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/default-settings.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/default-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/default-settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/default.CawthronPi.settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/default.CawthronPi.settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine.core.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine.core.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libraries/CawLogger.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/CawLogger.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libraries/email.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/email.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libraries/load_routines.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/load_routines.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/enumerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/enumerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/process_old_settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/process_old_settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters.php" beforeDir="false" afterPath="$PROJECT_DIR$/parameters.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processing-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/processing-config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/settings.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +33,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="web" />
   <component name="ProjectId" id="2BVhrtqcTvX0Z2n3llYAOJFA7XG" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -32,12 +44,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/Practice/web/emon-new/emoncms",
+    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm": "Docker Compose",
+    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm": "Docker Compose",
+    "last_opened_file_path": "E:/Practice/web/emon-orig",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "mariadb"
+      "mariadb",
+      "mysql"
     ]
   }
 }]]></component>
@@ -46,8 +61,15 @@
       <recent name="E:\Practice\webAPP-mqtt\emoncms-docker\emoncms" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Practice\web\emon-new\emoncms\ext_modules" />
+      <recent name="E:\Practice\web\emon-new\emoncms" />
       <recent name="E:\Practice\webAPP-mqtt\emoncms-docker\emoncms" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="run" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="$PROJECT_DIR$" port="8000">
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -60,7 +82,7 @@
       <workItem from="1656997362973" duration="8073000" />
       <workItem from="1657063315744" duration="2375000" />
       <workItem from="1657072337434" duration="408000" />
-      <workItem from="1658355432235" duration="340000" />
+      <workItem from="1658355432235" duration="14113000" />
     </task>
     <servers />
   </component>
@@ -82,7 +104,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/libraries/gridjs/grid-demo.php</url>
+          <url>file://$PROJECT_DIR$/Libraries/gridjs/grid-demo.php</url>
           <line>144</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>

@@ -6,7 +6,7 @@
 
 define('Telemetry_ENGINE', 1);
 chdir("/var/www/emoncms");
-require "processing_config.php";
+require "processing-config.php";
 require "libraries/AppLogger.php";
 $log = new AppLogger(__FILE__);
 
@@ -21,8 +21,8 @@ $mysqli = @new mysqli(
 );
 
 if ($mysqli->connect_error) { 
-    $log->error("Cannot connect to MYSQL database:". $mysqli->connect_error);
-    die('Check log\n');
+    $log->error("No se puede conectar a la base de datos mysql:". $mysqli->connect_error);
+    die('revisar el log\n');
 }
 
 // Connect to redis
@@ -44,8 +44,8 @@ if ($settings['redis']['enabled']) {
 
 $userid = 1; //Numero admin en la base de datos // default number of user admin in the database
 
-require("ext_modules/user/user_model.php");
+require("Ext_Modules/user/user_model.php");
 $user = new User($mysqli,$redis,null);
 
-require_once "ext_modules/feed/feed_model.php";
+require_once "Ext_Modules/feed/feed_model.php";
 $feed = new Feed($mysqli,$redis,$settings['feed']);

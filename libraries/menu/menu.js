@@ -1,5 +1,9 @@
-// Obtiene la configuracion del menu de la definicion _menu.php
-// get the configuration of menu from the definition file _menu.php
+/*
+    Obtiene la configuracion del menu de la definicion _menu.php
+    get the configuration of menu from the definition file _menu.php
+
+*/
+
 
 var menu = {
     obj: {},

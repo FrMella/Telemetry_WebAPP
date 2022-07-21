@@ -11,15 +11,16 @@ require "processing-config.php";
 require "engine.core.php";
 require "router.php";
 require "parameters.php";
-
+//require "locale.php";
 
 $Telemetry_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write " : "") . version();
 
 $path = get_app_path($settings["domain"]);
 $sidebarFixed = true;
 
-require "Libraries/AppLogger.php";
+require "libraries/AppLogger.php";
 $log = new AppLogger(__FILE__);
+
 
 if ($settings['redis']['enabled']) {
     if (!extension_loaded('redis')) {
@@ -29,7 +30,7 @@ if ($settings['redis']['enabled']) {
     $redis = new Redis();
     $connected = $redis->connect($settings['redis']['host'], $settings['redis']['port']);
     if (!$connected) {
-        echo "Cannot connect to redis database at ".$settings['redis']['host'].":".$settings['redis']['port']." , installation";
+        echo "Error al conectar a redis  ".$settings['redis']['host'].":".$settings['redis']['port']." , instalacion";
         die;
     }
     if (!empty($settings['redis']['prefix'])) {
@@ -37,7 +38,7 @@ if ($settings['redis']['enabled']) {
     }
     if (!empty($settings['redis']['auth'])) {
         if (!$redis->auth($settings['redis']['auth'])) {
-            echo "Cannot connect to redis ".$settings['redis']['host'].", autentication failed";
+            echo "No se puede conectar a redis ".$settings['redis']['host'].", Error de autentificacion";
             die;
         }
     }
@@ -68,8 +69,20 @@ $mysqli = @new mysqli(
     $settings["sql"]["port"]
 );
 
+
+/* funcion para debugear a la consola si el connection string esta correctamente formado hacia la base de datos*/
+/* Borrar cuando se termine el desarrollo*/
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+    echo "<script>console.log('datos: " . $output . "' );</script>";
+}
+
+debug_to_console($settings["sql"]); //
+
 if ($mysqli->connect_error) {
-    echo "Cannot access to database, review settings<br />";
+    echo "No se puede acceder a la base de datos / Cannot access to database<br />";
     if ($settings["display_errors"]) {
         echo "Error message: <b>" . $mysqli->connect_error . "</b>";
     }
@@ -85,7 +98,7 @@ if (!$mysqli->connect_error && $settings["sql"]["dbtest"]==true) {
     }
 }
 
-require("ext_modules/user/user_model.php");
+require("Ext_Modules/user/user_model.php");
 $user = new User($mysqli, $redis);
 
 $apikey = false;
@@ -116,7 +129,7 @@ if ($apikey) {
         $log->error("Invalid API key | ".$_SERVER["REMOTE_ADDR"]);
         exit();
     }
-} elseif ($devicekey && (@include "ext_modules/device/device_model.php")) {
+} elseif ($devicekey && (@include "Ext_Modules/device/device_model.php")) {
     $device = new Device($mysqli, $redis);
     $session = $device->devicekey_session($devicekey);
     if (empty($session)) {
@@ -157,6 +170,7 @@ if ($route->controller=="describe") {
 if ($route->controller=="version") {
     header('Content-Type: text/plain; charset=utf-8');
     echo version();
+    debug_to_console(version());
     exit;
 }
 
@@ -169,8 +183,8 @@ if (get('embed')==1) {
 
 if ($route->isRouteNotDefined()) {
     if ($settings["interface"]["enable_admin_ui"]) {
-        if (file_exists("Modules/setup")) {
-            require "ext_modules/setup/setup_model.php";
+        if (file_exists("Ext_Modules/setup")) {
+            require "Ext_Modules/setup/setup_model.php";
             $setup = new Setup($mysqli);
             if ($setup->status()=="unconfigured") {
                 $settings["interface"]["default_controller"] = "setup";
@@ -311,7 +325,7 @@ if ($route->format == 'json') {
     }
 } else if ($route->format == 'html') {
     if ($embed == 1) {
-        print view("Frontend/embed.php", $output);
+        print view("Frontend/FrontendEmbed.php", $output);
     } else {
         $menu = array();
         $menu["setup"] = array("name"=>"Setup", "order"=>1, "icon"=>"menu", "default"=>"feed/view", "l2"=>array());
@@ -320,7 +334,7 @@ if ($route->format == 'json') {
         load_menu();
         $output['menu'] = $menu;
 
-        $output['svg_icons'] = view("Theme/svg_icons.svg", array());
+        $output['svg_icons'] = view("Frontend/svg_icons.svg", array());
 
         $output['page_classes'][] = $route->controller;
 
@@ -329,7 +343,7 @@ if ($route->format == 'json') {
         } else {
             if (!in_array("manual",$output['page_classes'])) $output['page_classes'][] = 'auto';
         }
-        print view("Frontend/Telemetrytheme.php", $output);
+        print view("Frontend/appTheme.php", $output);
     }
 
 } elseif ($route->format == 'text') {

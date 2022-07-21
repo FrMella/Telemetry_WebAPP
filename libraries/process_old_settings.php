@@ -1,13 +1,13 @@
 <?php
 /*
  * todo: reparar el sistema de settings disponible y dejar esta rutina unica de configuracion
- *
+ * todo: no esta pasando los parametros de la connection string para reemplazar los viejos parametros
  */
 
 $settings = array(
 "domain" => isset($domain)?$domain:false,
-"Telemetry_dir" => isset($Telemetry_dir)?$Telemetry_dir:"/home/pi",
-"Telemetry_dir" => isset($Telemetry_dir)?$Telemetry_dir:"/home/pi",
+"emoncms_dir" => isset($emoncms_dir)?$emoncms_dir:"/home/pi",
+"openenergymonitor_dir" => isset($openenergymonitor_dir)?$openenergymonitor_dir:"/home/pi",
 "display_errors" => isset($display_errors)?$display_errors:true,
 "updatelogin" => isset($updatelogin)?$updatelogin:false,
 
@@ -91,7 +91,7 @@ $settings = array(
 ),
 
 "interface"=>array(
-    'appname' => isset($appname)?$appname:"emoncms",
+    'appname' => isset($appname)?$appname:"appTelemetry",
     'default_language' => isset($default_language)?$default_language:'en_GB',
     'theme' => isset($theme)?$theme:"basic",
     'themecolor' => isset($themecolor)?$themecolor:"blue",

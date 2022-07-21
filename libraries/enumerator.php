@@ -1,7 +1,7 @@
 <?php
 /* Enumera constantes y variables
 ** Enumerator of constants and variables
-
+* todo: implementar motores de procesamiento dinamicos disponibles desde la porcion de la base de datos del usuario
 */
 
 
@@ -76,6 +76,7 @@ class Engine
      * descriptor de los intervalos disponibles
      * function available intervals
      * todo: revisar si estos intervalos funcionan con la aplicacion del equipamiento
+     * todo: implementar en el futuro posibles invervalos para los sistemas disponibles.
      */
 
     public static function available_intervals() 
@@ -103,7 +104,8 @@ class Engine
             array("interval"=>86400, "description"=>"1d")
         );
     }
-     
+
+    // todo: validacion de los datos
     public static function is_valid($engineid)
     {
         return in_array($engineid, Engine::get_all());
