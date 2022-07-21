@@ -20,6 +20,7 @@ $mysqli = @new mysqli(
     $settings["sql"]["port"]
 );
 
+
 if ($mysqli->connect_error) { 
     $log->error("No se puede conectar a la base de datos mysql:". $mysqli->connect_error);
     die('revisar el log\n');

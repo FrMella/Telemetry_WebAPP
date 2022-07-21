@@ -52,7 +52,7 @@ if ($settings['redis']['enabled']) {
 $mqtt = false;
 
 if (!extension_loaded('mysql') && !extension_loaded('mysqli')) {
-    echo "Error at <b>MySQL extension(s)</b> review the settings <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restricted to local access)";
+    echo "Error en <b>las extenciones mysql</b> revise las configuraciones <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restringido a acceso local)";
     die;
 }
 

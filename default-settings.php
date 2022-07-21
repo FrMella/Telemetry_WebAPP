@@ -2,11 +2,11 @@
 
     
 $_settings = array(
-"domain" => false,
-"Telemetry_dir" => "/opt/emoncms",
-"TelemetryPi_dir" => "/opt/TelemetryPi",
-"display_errors" => true,
-"updatelogin" => false,
+    "domain" => false,
+    "emoncms_dir" => "/opt/emoncms",
+    "openenergymonitor_dir" => "/opt/openenergymonitor",
+    "display_errors" => true,
+    "updatelogin" => false,
 
 // mysql parametros de configuracion standard
 // Mysql database settings
