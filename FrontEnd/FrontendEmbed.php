@@ -29,7 +29,7 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","standard","co
         var current_themecolor = "<?php echo $settings["interface"]["themecolor"]; ?>";
         var current_themesidebar = "dark";
     </script>
-    <script src="<?php echo $path; ?>Libraries/TelemetryApp-helper.js?v=<?php echo $v; ?>"></script>
+    <script src="<?php echo $path; ?>Libraries/AppTelemetry-helper.js?v=<?php echo $v; ?>"></script>
 </head>
 <body>
 <div>

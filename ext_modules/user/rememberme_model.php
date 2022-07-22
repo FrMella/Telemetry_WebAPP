@@ -41,7 +41,7 @@ class Rememberme {
     public function __construct($mysqli)
     {
         $this->mysqli = $mysqli;
-        $this->log = new EmonLogger(__FILE__);
+        $this->log = new appLogger(__FILE__);
     }
 
     // ---------------------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class Rememberme {
     {          
         $this->log->info("setCookie: $content $expire");
 
-        if (is_https()) {
+        if (is_http_request()) {
             $this->secure = true;
         }
         

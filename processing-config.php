@@ -32,7 +32,7 @@ if (file_exists(dirname(__FILE__)."/settings.php")) {
         $settings['feed']['engines_hidden'] = json_decode($settings['feed']['engines_hidden']);
     }
 } else {
-    $settings_error = true;
+    $settings_error = false;
     $settings_error_title = "archivo de configuracion no disponible / missing settings file";
     $settings_error_message = "No se puede encontrar archivo de configuracion / Can't find settings.ini file";
 }
@@ -68,7 +68,7 @@ function ini_merge($defaults, $overrides)
             $defaults[$k] = ini_merge($defaults[$k], $overrides[$k]);
         } else {
             $defaults[$k] = resolve_env_vars($v, $defaults[$k]);
-#            $defaults[$k] = $v;
+#           $defaults[$k] = $v;
         }
     }
 

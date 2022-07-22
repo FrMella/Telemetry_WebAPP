@@ -1,15 +1,8 @@
 <?php
-/*
-   All Emoncms code is released under the GNU Affero General Public License.
-   See COPYRIGHT.txt and LICENSE.txt.
+ /*
+  * Modulo usuario
+  */
 
-   ---------------------------------------------------------------------
-   Emoncms - open source energy visualisation
-   Part of the OpenEnergyMonitor project:
-   http://openenergymonitor.org
-*/
-
-// no direct access
 defined('Telemetry_ENGINE') or die('Restricted access');
 
 class User
@@ -24,7 +17,6 @@ class User
 
     public function __construct($mysqli,$redis)
     {
-        //copy the settings value, otherwise the enable_rememberme will always be false.
         global $settings;
         $this->enable_rememberme = $settings["interface"]["enable_rememberme"];
         $this->email_verification = $settings["interface"]["email_verification"];
@@ -32,30 +24,18 @@ class User
 
         $this->mysqli = $mysqli;
 
-        require "Ext_Ext_Modules/user/rememberme_model.php";
+        require "Ext_Modules/user/rememberme_model.php";
         $this->rememberme = new Rememberme($mysqli);
 
         $this->redis = $redis;
-        $this->log = new EmonLogger(__FILE__);
+        $this->log = new appLogger(__FILE__);
     }
 
-    //---------------------------------------------------------------------------------------
-    // Core session methods
-    //---------------------------------------------------------------------------------------
 
     public function apikey_session($apikey_in)
     {
         $session = array();
-        
-        // 1. Only allow alphanumeric characters
-        // if (!ctype_alnum($apikey_in)) return $session;
-        
-        // 2. Only allow 32 character length
         if (strlen($apikey_in)!=32) return array();
-
-        //----------------------------------------------------
-        // Check redis cache first
-        //----------------------------------------------------
         if($this->redis)
         {
             if ($this->redis->exists("writeapikey:$apikey_in")) {
@@ -74,16 +54,15 @@ class User
                 $session['read'] = 1;
                 $session['write'] = 0;
                 $session['admin'] = 0;
-                $session['lang'] = "en";      // API access is always in english
-                $session['username'] = "API"; // TBD
+                $session['lang'] = "en";
+                $session['username'] = "API";
                 $session['gravatar'] = '';
                 return $session;
             }
         }
         
-        //----------------------------------------------------
-        // If not in redis check mysql
-        //----------------------------------------------------
+        // si Redis no esta disponible check por mysql /  If not in redis check mysql
+
         $stmt = $this->mysqli->prepare("SELECT id,username FROM users WHERE apikey_write=?");
         $stmt->bind_param("s",$apikey_in);
         $stmt->execute();
@@ -96,7 +75,7 @@ class User
             $session['read'] = 1;
             $session['write'] = 1;
             $session['admin'] = 0;
-            $session['lang'] = "en"; // API access is always in english
+            $session['lang'] = "en";
             $session['username'] = $username;
             $session['gravatar'] = '';
             if ($this->redis) $this->redis->set("writeapikey:$apikey_in",$id);
@@ -115,7 +94,7 @@ class User
             $session['read'] = 1;
             $session['write'] = 0;
             $session['admin'] = 0;
-            $session['lang'] = "en"; // API access is always in english
+            $session['lang'] = "en";
             $session['username'] = $username;
             $session['gravatar'] = '';
             if ($this->redis) $this->redis->set("readapikey:$apikey_in",$id);
@@ -129,7 +108,6 @@ class User
     {
         if (strlen($apikey_in)!=32) return false;
         // if (!ctype_alnum($apikey_in)) return false;
-        
         $stmt = $this->mysqli->prepare("SELECT id FROM users WHERE apikey_read=? OR apikey_write=?");
         $stmt->bind_param("ss",$apikey_in,$apikey_in);
         $stmt->execute();
@@ -138,32 +116,24 @@ class User
         $stmt->close();
         return $id;
     }
-
-    public function emon_session_start()
+    // todo: reparar el sistema de cookies
+    public function telemetryapp_session_start()
     {
-        // useful for testing session and rememberme
-        // ini_set('session.gc_maxlifetime', 20);
-        // session_set_cookie_params(20);
-        
         $cookie_params = session_get_cookie_params();
+       // session_name('TELEMETRYAPP_SESSID');
 
-        //name of cookie 
-        session_name('EMONCMS_SESSID'); 
-        //get subdir installation 
         $cookie_params['path'] = dirname($_SERVER['SCRIPT_NAME']);
-        // Add a slash if the last character isn't already a slash
         if (substr($cookie_params['path'], -1) !== '/')
             $cookie_params['path'] .= '/';
-        //not pass cookie to javascript 
         $cookie_params['httponly'] = true;
         $cookie_params['samesite'] = 'Strict';
         
-        if (is_https()) {
+        if (is_http_request()) {
             $cookie_params['secure'] = true;
         }
         
         if (PHP_VERSION_ID>=70300) {
-            session_set_cookie_params($cookie_params);
+           // session_set_cookie_params($cookie_params);
         } else {
             session_set_cookie_params(
                 $cookie_params['lifetime'],
@@ -174,25 +144,19 @@ class User
             );
         }
         
-        session_start();
+        //session_start();
 
         if ($this->enable_rememberme)
         {
             if (!empty($_SESSION['userid'])) {
-                // if rememberme emoncms cookie exists but is not valid then
-                // a valid cookie is a cookie who's userid, token and persistant token match a record in the db
-                
+
                 if ((isset($_SESSION['cookielogin']) && $_SESSION['cookielogin']==true) && !$this->rememberme->cookieIsValid($_SESSION['userid'])) {
                     $this->logout();
                 }
             } else {
-                // No session exists, try remember me login
                 $loginresult = $this->rememberme->login();
                 if ($loginresult)
                 {
-                    // 28/04/17: Changed explicitly stated fields to load all with * in order to access startingpage
-                    // without cuasing an error if it has not yet been created in the database.
-                    // SELECT id,username,admin,language,startingpage FROM users WHERE id = '$loginresult'
                     $loginresult = (int) $loginresult;
                     $result = $this->mysqli->query("SELECT * FROM users WHERE id = '$loginresult'");
                     if ($result->num_rows < 1) {
@@ -209,8 +173,6 @@ class User
                             $_SESSION['lang'] = $userData->language;
                             $_SESSION['timezone'] = $userData->timezone;
                             if (isset($userData->startingpage)) $_SESSION['startingpage'] = $userData->startingpage;
-                            // There is a chance that an attacker has stolen the login token, so we store
-                            // the fact that the user was logged in via RememberMe (instead of login form)
                             $_SESSION['cookielogin'] = true;
                         }
                     }
@@ -251,11 +213,8 @@ class User
         if (strlen($password) < 4 || strlen($password) > 250) return array('success'=>false, 'message'=>_("Password length error"));
         
         if (!$this->timezone_valid($timezone)) {
-            // use default UTC timezone if timezone is not valid
             $timezone = "UTC";
         }
-
-        // If we got here the username, password and email should all be valid
 
         $hash = hash('sha256', $password);
         $salt = generate_secure_key(16);
@@ -272,12 +231,10 @@ class User
             return array('success'=>false, 'message'=>_("Error creating user, mysql error: ".$error));
         }
 
-        // Make the first user an admin
         $userid = $this->mysqli->insert_id;
         if ($userid == 1) $this->mysqli->query("UPDATE users SET admin = 1 WHERE id = '1'");
         $stmt->close();
         
-        // Email verification
         if ($this->email_verification) {
             $result = $this->send_verification_email($username);
             if ($result['success']) return array('success'=>true, 'verifyemail'=>true, 'message'=>"Email verification email sent, please check your inbox");
@@ -288,10 +245,7 @@ class User
     
     public function send_verification_email($username)
     {
-        // check for valid username format
         if (preg_replace('/[^\p{N}\p{L}_\s\-]/u','',$username)!=$username) return array('success'=>false, 'message'=>_("Invalid username"));
-
-        // check that username exists and load email and verification status
         if (!$stmt = $this->mysqli->prepare("SELECT id,email,email_verified FROM users WHERE username=?")) {
             return array('success'=>false, 'message'=>_("Database error, you may need to run database update"));
         }
@@ -302,34 +256,30 @@ class User
         $result = $stmt->fetch();
         $stmt->close();
         
-        // exit if user does not exist
         if (!$result || $id<1) return array('success'=>false, 'message'=>_("Username does not exist"));
-        // exit if account is already verified
         if ($email_verified) return array('success'=>false, 'message'=>_("Email already verified"));
         
-        // Create new verification key
         $verification_key = generate_secure_key(16);
-        // Save new verification key
         $stmt = $this->mysqli->prepare("UPDATE users SET verification_key=? WHERE id=?");
         $stmt->bind_param("si",$verification_key,$id);
         $stmt->execute();
         $stmt->close();
         
-        // Send verification email
         global $path;
         $verification_link = $path."user/verify?email=".urlencode($email)."&key=$verification_key";
         
         // $this->redis->rpush("emailqueue",json_encode(array(
         //    "emailto"=>$email,
         //    "type"=>"passwordrecovery",
-        //    "subject"=>'Emoncms email verification',
-        //    "message"=>"<p>To complete emoncms registration please verify your email by following this link: <a href='$verification_link'>$verification_link</a></p>"
+        //    "subject"=>'verificacion de email / email verification',
+        //    "message"=>"<p>Para completar su verificacion de email: <a href='$verification_link'>$verification_link</a></p>"
+        //     "message"=>"<p>Para verficar su email aqui: <a href='$verification_link'>$verification_link</a></p>"
         // )));
         
         require "Libraries/email.php";
         $emailer = new Email();
         $emailer->to(array($email));
-        $emailer->subject(ucfirst($this->appname).' email verification');
+        $emailer->subject(ucfirst($this->appname).' Varificacion email');
         $emailer->body("<p>To complete ".$this->appname." registration please verify your email by following this link: <a href='$verification_link'>$verification_link</a></p>");
         $result = $emailer->send();
         if (!$result['success']) {
@@ -359,13 +309,13 @@ class User
                 $stmt->bind_param("i",$id);
                 $stmt->execute();
                 $stmt->close();
-                return array('success'=>true, 'message'=>"Email verified");
+                return array('success'=>true, 'message'=>"Email verificado");
             } else {
-                return array('success'=>false, 'message'=>"Email already verified");
+                return array('success'=>false, 'message'=>"Email ya existe");
             }
         }
         
-        return array('success'=>false, 'message'=>"Invalid email or verification key");
+        return array('success'=>false, 'message'=>"email invalido o clave de verificacion");
     }
 
     public function login($username, $password, $remembermecheck, $referrer='')
@@ -374,14 +324,11 @@ class User
 
         if (!$username || !$password) return array('success'=>false, 'message'=>_("Username or password empty"));
 
-        // filter out all except for alphanumeric white space and dash
         // if (!ctype_alnum($username))
         $username_out = preg_replace('/[^\p{N}\p{L}_\s\-]/u','',$username);
 
         if ($username_out!=$username) return array('success'=>false, 'message'=>_("Username must only contain a-z 0-9 dash and underscore, if you created an account before this rule was in place enter your username without the non a-z 0-9 dash underscore characters to login and feel free to change your username on the profile page."));
 
-        // 28/04/17: Changed explicitly stated fields to load all with * in order to access startingpage
-        // without cuasing an error if it has not yet been created in the database.
         if (!$stmt = $this->mysqli->prepare("SELECT id,password,salt,apikey_write,admin,language,startingpage,email_verified,timezone,gravatar FROM users WHERE username=?")) {
             return array('success'=>false, 'message'=>_("Database error, you may need to run database update"));
         }
@@ -444,9 +391,6 @@ class User
         }
     }
 
-    // Authorization API. returns user write and read apikey on correct username + password
-    // This is useful for using emoncms with 3rd party applications
-
     public function get_apikeys_from_login($username, $password)
     {
         if (!$username || !$password) return array('success'=>false, 'message'=>_("Username or password empty"));
@@ -495,14 +439,12 @@ class User
         if (strlen($old) < 4 || strlen($old) > 250) return array('success'=>false, 'message'=>_("Password length error"));
         if (strlen($new) < 4 || strlen($new) > 250) return array('success'=>false, 'message'=>_("Password length error"));
 
-        // 1) check that old password is correct
         $result = $this->mysqli->query("SELECT password, salt FROM users WHERE id = '$userid'");
         $row = $result->fetch_object();
         $hash = hash('sha256', $row->salt . hash('sha256', $old));
 
         if ($hash == $row->password)
         {
-            // 2) Save new password
             $hash = hash('sha256', $new);
             $salt = generate_secure_key(16);
             $password = hash('sha256', $salt . $hash);
@@ -539,15 +481,10 @@ class User
             global $settings;
             if ($settings["interface"]["enable_password_reset"]==true)
             {
-                // Generate new random password
                 $newpass = hash('sha256',generate_secure_key(32));
-
-                // Hash and salt
                 $hash = hash('sha256', $newpass);
                 $salt = generate_secure_key(16);
                 $password = hash('sha256', $salt . $hash);
-                
-                // Sent email with $newpass to $email
                 require "Libraries/email.php";
                 $email = new Email();
                 $email->to($emailto);
@@ -623,9 +560,6 @@ class User
         return array('success'=>true, 'message'=>_("Email updated"));
     }
 
-    //---------------------------------------------------------------------------------------
-    // Get by userid methods
-    //---------------------------------------------------------------------------------------
     public function get_username($userid)
     {
         $userid = (int) $userid;
@@ -682,7 +616,7 @@ class User
         $row = $result->fetch_object();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone($row->timezone));
-        return intval($now->getOffset()); // Will return seconds offset from GMT
+        return intval($now->getOffset());
     }
 
     public function get_timezone($userid)
@@ -697,7 +631,6 @@ class User
         return false;
     }
 
-    // List supported PHP timezones
     public function get_timezones()
     {
         static $timezones = null;
@@ -734,10 +667,6 @@ class User
         return $row->salt;
     }
 
-    //---------------------------------------------------------------------------------------
-    // Get by other paramater methods
-    //---------------------------------------------------------------------------------------
-
     public function get_id($username)
     {
         if (!ctype_alnum($username)) return false;
@@ -752,9 +681,6 @@ class User
         return $id;
     }
 
-    //---------------------------------------------------------------------------------------
-    // Set by id methods
-    //---------------------------------------------------------------------------------------
     public function set_user_lang($userid, $lang)
     {   
         $stmt = $this->mysqli->prepare("UPDATE users SET language = ? WHERE id = ?");
@@ -774,10 +700,6 @@ class User
         $stmt->close();
     }
 
-    //---------------------------------------------------------------------------------------
-    // Special methods
-    //---------------------------------------------------------------------------------------
-
     public function get($userid)
     {
         $userid = (int) $userid;
@@ -792,7 +714,6 @@ class User
         global $settings;
         $default_locale = $settings["interface"]["default_language"];
         $default_timezone = 'Europe/London';
-        // Validation
         $userid = (int) $userid;
         if(!$data || $userid < 1) return array('success'=>false, 'message'=>_("Error updating user info"));
 
@@ -818,7 +739,6 @@ class User
         $stmt->close();
     }
 
-    // Generates a new random read apikey
     public function new_apikey_read($userid)
     {
         $userid = (int) $userid;
@@ -832,7 +752,6 @@ class User
         return $apikey;
     }
 
-    // Generates a new random write apikey
     public function new_apikey_write($userid)
     {
         $userid = (int) $userid;

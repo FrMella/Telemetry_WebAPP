@@ -13,12 +13,12 @@ $settings = array(
 
 
 "sql"=>array(
-    "server"   => isset($server)?$server:"localhost",
-    "database" => isset($database)?$database:"emoncms",
-    "username" => isset($username)?$username:"_DB_USER_",
-    "password" => isset($password)?$password:"_DB_PASSWORD_",
+    "server"   => isset($server)?$server:"3.129.108.124",
+    "database" => isset($database)?$database:"monitorAppDB",
+    "username" => isset($username)?$username:"FrAdminDB",
+    "password" => isset($password)?$password:"264HE3394k&264HE3394k",
     "port"     => isset($port)?$port:3306,
-    "dbtest"   => isset($dbtest)?$dbtest:true
+    "dbtest"   => isset($dbtest)?$dbtest:false
 ),
 
 // Redis base de datos
@@ -103,8 +103,8 @@ $settings = array(
     'default_controller_auth' => isset($default_controller_auth)?$default_controller_auth:"feed",
     'default_action_auth' => isset($default_action_auth)?$default_action_auth:"list",
     'feedviewpath' => isset($feedviewpath)?$feedviewpath:"vis/auto?feedid=",
-    'enable_multi_user' => isset($enable_multi_user)?$enable_multi_user:false,
-    'enable_rememberme' => isset($enable_rememberme)?$enable_rememberme:true,
+    'enable_multi_user' => isset($enable_multi_user)?$enable_multi_user:true,
+    'enable_rememberme' => isset($enable_rememberme)?$enable_rememberme:false,
     'enable_password_reset' => isset($enable_password_reset)?$enable_password_reset:false,
     'enable_admin_ui' => isset($allow_emonpi_admin)?$allow_emonpi_admin:false,
     'enable_update_ui' => isset($admin_show_update)?$admin_show_update:true,

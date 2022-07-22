@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="f88b677c-031d-44b9-bf55-2b004d8a189e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/default-settings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/default-settings.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/default-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/default-settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ext_modules/user/rememberme_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/ext_modules/user/rememberme_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ext_modules/user/user_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/ext_modules/user/user_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.php" beforeDir="false" afterPath="$PROJECT_DIR$/router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/process_old_settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/process_old_settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processing-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/processing-config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +39,7 @@
     "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm": "Docker Compose",
     "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm": "Docker Compose",
     "last_opened_file_path": "E:/Practice/web/emon-orig",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -72,7 +75,7 @@
       <workItem from="1656997362973" duration="8073000" />
       <workItem from="1657063315744" duration="2375000" />
       <workItem from="1657072337434" duration="408000" />
-      <workItem from="1658355432235" duration="15597000" />
+      <workItem from="1658355432235" duration="26714000" />
     </task>
     <servers />
   </component>

@@ -4,16 +4,18 @@
  *
  */
 
-define('Telemetry_ENGINE', 1);
 
+define('Telemetry_ENGINE', 1);
 
 require "processing-config.php";
 require "engine.core.php";
 require "router.php";
 require "parameters.php";
+
+//todo: implementar cambio de lenguaje en el sitio
 //require "locale.php";
 
-$telemetry_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write " : "") . version();
+$Telemetry_version = ($settings['feed']['redisbuffer']['enabled'] ? "low-write " : "") . version();
 
 $path = get_app_path($settings["domain"]);
 $sidebarFixed = true;
@@ -24,13 +26,13 @@ $log = new AppLogger(__FILE__);
 
 if ($settings['redis']['enabled']) {
     if (!extension_loaded('redis')) {
-        echo "su instalacion de php parace no tener disponible  <b>Redis</b>  esta version que requiere el software. <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restringido a acceso local)";
+        echo "Error access to <b>Redis</b> review the settings <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restricted to local access)";
         die;
     }
     $redis = new Redis();
     $connected = $redis->connect($settings['redis']['host'], $settings['redis']['port']);
     if (!$connected) {
-        echo "No se puede conectar a redis ".$settings['redis']['host'].":".$settings['redis']['port']." ";
+        echo "Error al conectar a redis  ".$settings['redis']['host'].":".$settings['redis']['port']." , instalacion";
         die;
     }
     if (!empty($settings['redis']['prefix'])) {
@@ -38,7 +40,7 @@ if ($settings['redis']['enabled']) {
     }
     if (!empty($settings['redis']['auth'])) {
         if (!$redis->auth($settings['redis']['auth'])) {
-            echo "No se puede conectar a redis ".$settings['redis']['host'].", fallo de autentificacion";
+            echo "No se puede conectar a redis ".$settings['redis']['host'].", Error de autentificacion";
             die;
         }
     }
@@ -52,12 +54,12 @@ if ($settings['redis']['enabled']) {
 $mqtt = false;
 
 if (!extension_loaded('mysql') && !extension_loaded('mysqli')) {
-    echo "La instalacion parece tener perdido la <b>extension mysql</b> requerida <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restringida a acceso local)";
+    echo "Error en <b>las extenciones mysql</b> revise las configuraciones <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restringido a acceso local)";
     die;
 }
 
 if (!extension_loaded('gettext')) {
-    echo "La instalacion parece tener perdido <b>gettext</b> requerido. <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restringida a acceso local)";
+    echo "Error at: <b>gettext</b> review settings <br> See <a href='". $path. "php-info.php'>PHP Info</a> (restricted to local access)";
     die;
 }
 
@@ -69,12 +71,22 @@ $mysqli = @new mysqli(
     $settings["sql"]["port"]
 );
 
-// verificar la conexion con la base de datos
-// Verify connection to the database
+
+/* funcion para debugear a la consola si el connection string esta correctamente formado hacia la base de datos*/
+/* Borrar cuando se termine el desarrollo*/
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+    echo "<script>console.log('datos: " . $output . "' );</script>";
+}
+
+debug_to_console($settings["sql"]); //
+
 if ($mysqli->connect_error) {
-    echo "No se puede conectar a la base de datos / Cannot connect to database<br />";
+    echo "No se puede acceder a la base de datos / Cannot access to database<br />";
     if ($settings["display_errors"]) {
-        echo "Error: <b>" . $mysqli->connect_error . "</b>";
+        echo "Error message: <b>" . $mysqli->connect_error . "</b>";
     }
     die();
 }
@@ -82,19 +94,14 @@ if ($mysqli->connect_error) {
 $mysqli->set_charset("utf8");
 
 if (!$mysqli->connect_error && $settings["sql"]["dbtest"]==true) {
-    require "Lib/dbschemasetup.php";
+    require "Libraries/dbschemasetup.php";
     if (!db_check($mysqli, $settings["sql"]["database"])) {
         db_schema_setup($mysqli, load_db_schema(), true);
     }
 }
 
-// inicializacion del modulo usuario
-// init user module
 require("Ext_Modules/user/user_model.php");
 $user = new User($mysqli, $redis);
-
-// todo:implementacion Soporte de apikey / apikey support
-// GET /resource HTTP/1.1
 
 $apikey = false;
 $devicekey = false;
@@ -109,7 +116,6 @@ if (isset($_GET['apikey'])) {
 } elseif (isset($_SERVER["HTTP_AUTHORIZATION"])) {
 
     if (isset($_SERVER["CONTENT_TYPE"]) && $_SERVER["CONTENT_TYPE"]=="aes128cbc") {
-        // AES128CBC
     } else {
         $apikey = str_replace('Bearer ', '', $_SERVER["HTTP_AUTHORIZATION"]);
     }
@@ -125,7 +131,7 @@ if ($apikey) {
         $log->error("Invalid API key | ".$_SERVER["REMOTE_ADDR"]);
         exit();
     }
-} elseif ($devicekey && (@include "Modules/device/device_model.php")) {
+} elseif ($devicekey && (@include "Ext_Modules/device/device_model.php")) {
     $device = new Device($mysqli, $redis);
     $session = $device->devicekey_session($devicekey);
     if (empty($session)) {
@@ -139,16 +145,16 @@ if ($apikey) {
     $session = $user->telemetryapp_session_start();
 }
 
-// todo: implementar soporte de idiomas / implement language support
+
 if (!isset($session['lang'])) {
     $session['lang']='';
 }
-//set_telemetry_lang($session['lang']);
 
-// todo: implementar ruteador de controlador / get route and load controller
+
 define('EMPTY_ROUTE', "#UNDEFINED#");
 
 $route = new Route(get('q'), server('DOCUMENT_ROOT'), server('REQUEST_METHOD'));
+
 $param = new Param($route, $user);
 
 if ($route->controller=="describe") {
@@ -157,14 +163,16 @@ if ($route->controller=="describe") {
     if ($redis && $redis->exists("describe")) {
         $type = $redis->get("describe");
     } else {
-        $type = 'telemetryapp';
+        $type = 'Telemetry';
     }
     echo $type;
     die;
 }
+
 if ($route->controller=="version") {
     header('Content-Type: text/plain; charset=utf-8');
     echo version();
+    debug_to_console(version());
     exit;
 }
 
@@ -174,10 +182,11 @@ if (get('embed')==1) {
     $embed = 0;
 }
 
+
 if ($route->isRouteNotDefined()) {
     if ($settings["interface"]["enable_admin_ui"]) {
-        if (file_exists("Modules/setup")) {
-            require "Modules/setup/setup_model.php";
+        if (file_exists("Ext_Modules/setup")) {
+            require "Ext_Modules/setup/setup_model.php";
             $setup = new Setup($mysqli);
             if ($setup->status()=="unconfigured") {
                 $settings["interface"]["default_controller"] = "setup";
@@ -188,6 +197,7 @@ if ($route->isRouteNotDefined()) {
     }
 
     if (!isset($session['read']) || (isset($session['read']) && !$session['read'])) {
+
         $route->controller = $settings["interface"]["default_controller"];
         $route->action = $settings["interface"]["default_action"];
         $route->subaction = "";
@@ -196,6 +206,7 @@ if ($route->isRouteNotDefined()) {
             header('Location: '.$session["startingpage"]);
             die;
         } else {
+
             $route->controller = $settings["interface"]["default_controller_auth"];
             $route->action = $settings["interface"]["default_action_auth"];
             $route->subaction = "";
@@ -205,8 +216,8 @@ if ($route->isRouteNotDefined()) {
 
 if ($devicekey && !($route->controller == 'input' && ($route->action == 'bulk' || $route->action == 'post'))) {
     header($_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized");
-    print "Unauthorized. Device key autentication only permits input post or bulk actions";
-    $log->error("Unauthorized. Device key autentication only permits input post or bulk actions");
+    print "Unauthorized. Device key autentication ";
+    $log->error("Unauthorized. Device key autentication");
     exit();
 }
 
@@ -217,6 +228,7 @@ if ($route->controller == 'input' && $route->action == 'bulk') {
 }
 
 $output = controller($route->controller);
+
 if ($output['content'] == EMPTY_ROUTE && $settings["public_profile"]["enabled"] && $route->controller!='admin') {
     $userid = $user->get_id($route->controller);
     if ($userid) {
@@ -228,6 +240,7 @@ if ($output['content'] == EMPTY_ROUTE && $settings["public_profile"]["enabled"] 
         $route->controller = $settings["public_profile"]["controller"];
         $route->action = $settings["public_profile"]["action"];
         $output = controller($route->controller);
+
         if ($output["content"]=="" && $route->subaction=="graph") {
             $route->controller = "graph";
             $route->action = "";
@@ -238,13 +251,14 @@ if ($output['content'] == EMPTY_ROUTE && $settings["public_profile"]["enabled"] 
 }
 
 if ($output['content'] === EMPTY_ROUTE) {
+
     $actions = implode("/", array_filter(array($route->action, $route->subaction)));
     $message = sprintf(_('%s cannot respond to %s'), sprintf("<strong>%s</strong>", ucfirst($route->controller)), sprintf('<strong>"%s"</strong>', $actions));
-    header($_SERVER["SERVER_PROTOCOL"]." 406 no acceptable");
+    header($_SERVER["SERVER_PROTOCOL"]." 406 Not Acceptable");
     $title = _('406 Not Acceptable');
-    $plain_text = _('Ruta no encontrada');
-    $intro = sprintf('%s %s', _('URI no existente.'), $message);
-    $text = _('intente otro link desde el menu.');
+    $plain_text = _('Route not found');
+    $intro = sprintf('%s %s', _('URI not acceptable.'), $message);
+    $text = _('Try another link from the menu.');
     if ($route->format==='html') {
         $output['content'] = sprintf('<h2>%s</h2><p class="lead">%s.</p><p>%s</p>', $title, $intro, $text);
     } else {
@@ -256,12 +270,13 @@ if ($output['content'] === EMPTY_ROUTE) {
     $log->warn(sprintf('%s|%s', $title, implode('/', array_filter(array($route->controller,$route->action,$route->subaction)))));
 }
 
+
 if ($output['content'] == "" && (!isset($session['read']) || (isset($session['read']) && !$session['read']))) {
-    $log->error(sprintf('%s|%s', _('No autentificado'), implode('/', array_filter(array($route->controller,$route->action,$route->subaction)))));
+    $log->error(sprintf('%s|%s', _('Not Authenticated'), implode('/', array_filter(array($route->controller,$route->action,$route->subaction)))));
     $route->controller = "user";
     $route->action = "login";
     $route->subaction = "";
-    $message = urlencode(_('Autentificacion requerida'));
+    $message = urlencode(_('Authentication Required'));
     $referrer = urlencode(base64_encode(filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
     $route->query = sprintf("msg=%s&ref=%s", $message, $referrer);
     $output = controller($route->controller);
@@ -269,6 +284,7 @@ if ($output['content'] == "" && (!isset($session['read']) || (isset($session['re
 
 $output['route'] = $route;
 $output['session'] = $session;
+
 
 if ($route->format == 'json') {
     if ($route->controller=='time') {
@@ -283,7 +299,7 @@ if ($route->format == 'json') {
     } else {
         header('Content-Type: application/json');
         if (!empty($output['message'])) {
-            header(sprintf('X-emoncms-message: %s', $output['message']));
+            header(sprintf('X-CAW-message: %s', $output['message']));
         }
         print json_encode($output['content']);
         if (json_last_error()!=JSON_ERROR_NONE) {
@@ -315,15 +331,13 @@ if ($route->format == 'json') {
     } else {
         $menu = array();
         $menu["setup"] = array("name"=>"Setup", "order"=>1, "icon"=>"menu", "default"=>"feed/view", "l2"=>array());
-        if (!$session["write"]) $menu["setup"]["name"] = "TelemetryApp";
+        if (!$session["write"]) $menu["setup"]["name"] = "Telemetry";
 
         load_menu();
         $output['menu'] = $menu;
 
-        $output['svg_icons'] = view("Theme/svg_icons.svg", array());
+        $output['svg_icons'] = view("Frontend/svg_icons.svg", array());
 
-        // todo: agregar css clases y nombres al body basado en las opciones del controllador
-        // todo: Add css class to body based on controllers options
         $output['page_classes'][] = $route->controller;
 
         if (!$session['read']) {
