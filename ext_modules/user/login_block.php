@@ -1,15 +1,8 @@
 <?php
 /*
- All Emoncms code is released under the GNU Affero General Public License.
- See COPYRIGHT.txt and LICENSE.txt.
-
- ---------------------------------------------------------------------
- Emoncms - open source energy visualisation
- Part of the OpenEnergyMonitor project:
- http://openenergymonitor.org
+ * Francisco Mella
  */
 
-// no direct access
 defined('Telemetry_ENGINE') or die('Restricted access');
 
 global $path, $settings;
@@ -70,18 +63,18 @@ global $path, $settings;
                     <?php if ($settings["interface"]["enable_rememberme"]) { ?>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" tabindex="5" id="rememberme" value="1" name="rememberme"><?php echo '&nbsp;'._('Remember me'); ?>
+                                <input type="checkbox" tabindex="5" id="rememberme" value="1" name="rememberme"><?php echo '&nbsp;'._('Recordarme'); ?>
                             </label>
                         </div>
                     <?php } ?>
-                    <button id="login" class="btn btn-primary" tabindex="6" type="submit"><?php echo _('Login'); ?></button>
+                    <button id="login" class="btn btn-primary" tabindex="6" type="submit"><?php echo _('Ingresar'); ?></button>
                     <?php if ($allowusersregister) { echo '&nbsp;'._('or').'&nbsp;' ?>
-                        <a id="register-link" href="#"><?php echo _('register'); ?></a>
+                        <a id="register-link" href="#"><?php echo _('registrar'); ?></a>
                     <?php } ?>
                 </div>
 
                 <div class="form-group register-item" style="display:none">
-                    <button id="register" class="btn btn-primary" type="button"><?php echo _('Register'); ?></button>
+                    <button id="register" class="btn btn-primary" type="button"><?php echo _('Registrar'); ?></button>
                     <?php echo '&nbsp;'._('or').'&nbsp;' ?>
                     <a id="cancel-link" href="#"><?php echo _('login'); ?></a>
                 </div>
@@ -183,7 +176,6 @@ $("#cancel-link").click(function(){
 });
 
 $('input').on('keypress', function(e) {
-    //login or register when pressing enter
     if (e.which == 13) {
         e.preventDefault();
         if ( register_open ) {
@@ -220,7 +212,7 @@ function login(){
         }
         else
         {
-            if (result.message=="Please verify email address") {
+            if (result.message=="Verifique el email address") {
                 $("#loginmessage").html("<div class='alert alert-error'>"+result.message+"<br><br><button class='btn resend-verify' style='float:right'>Resend</button>Click to resend<br>verification email:</div>");
             } else {
                 $("#loginmessage").html("<div class='alert alert-error'>"+result.message+"</div>");
@@ -242,7 +234,6 @@ function register(){
     }
     else
     {
-        // Set user timezone automatically using current browser timezone
         var user_timezone = 'UTC';
         if (Intl!=undefined) {
             user_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

@@ -93,7 +93,7 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
     </main>
 </div>
 <div id="footer">
-    <?php echo dgettext('theme_messages','Powered by'); ?>&nbsp;<a href="http://www.Telemetry.org.nz" target="_blank" rel="noopener">Telemetry Institute</a>
+    <?php echo dgettext('theme_messages','Powered by'); ?>&nbsp;<a href="http://francisco.mella.nz" target="_blank" rel="noopener">Telemetry APP v1.45</a>
     <span> | <a href="https://www.Telemetry.org.nz" target="_blank" rel="noopener"><?php echo $Telemetry_version; ?></a></span>
 </div>
 

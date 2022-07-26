@@ -27,7 +27,7 @@ var user = {
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if(xhr.status==404) {
-            result = "404 Not Found: Is modrewrite configured on your system?"
+            result = "error 404: modwrite no esta activado"
         } else {
             result = xhr.status+" "+thrownError;
         }
@@ -56,7 +56,7 @@ var user = {
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if(xhr.status==404) {
-            result = "404 Not Found: Is modrewrite configured on your system?"
+            result = "error 404: modwrite no esta activado"
         } else {
             result = xhr.status+" "+thrownError;
         }
