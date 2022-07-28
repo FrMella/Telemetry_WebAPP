@@ -1,24 +1,24 @@
 <?php
 /*
  * todo: reparar el sistema de settings disponible y dejar esta rutina unica de configuracion
- *
+ * todo: no esta pasando los parametros de la connection string para reemplazar los viejos parametros
  */
 
 $settings = array(
 "domain" => isset($domain)?$domain:false,
-"Telemetry_dir" => isset($Telemetry_dir)?$Telemetry_dir:"/home/pi",
-"Telemetry_dir" => isset($Telemetry_dir)?$Telemetry_dir:"/home/pi",
+"emoncms_dir" => isset($emoncms_dir)?$emoncms_dir:"/home/pi",
+"openenergymonitor_dir" => isset($openenergymonitor_dir)?$openenergymonitor_dir:"/home/pi",
 "display_errors" => isset($display_errors)?$display_errors:true,
 "updatelogin" => isset($updatelogin)?$updatelogin:false,
 
 
 "sql"=>array(
-    "server"   => isset($server)?$server:"localhost",
-    "database" => isset($database)?$database:"emoncms",
-    "username" => isset($username)?$username:"_DB_USER_",
-    "password" => isset($password)?$password:"_DB_PASSWORD_",
+    "server"   => isset($server)?$server:"3.129.108.124",
+    "database" => isset($database)?$database:"monitorAppDB",
+    "username" => isset($username)?$username:"FrAdminDB",
+    "password" => isset($password)?$password:"264HE3394k&264HE3394k",
     "port"     => isset($port)?$port:3306,
-    "dbtest"   => isset($dbtest)?$dbtest:true
+    "dbtest"   => isset($dbtest)?$dbtest:false
 ),
 
 // Redis base de datos
@@ -91,7 +91,7 @@ $settings = array(
 ),
 
 "interface"=>array(
-    'appname' => isset($appname)?$appname:"emoncms",
+    'appname' => isset($appname)?$appname:"appTelemetry",
     'default_language' => isset($default_language)?$default_language:'en_GB',
     'theme' => isset($theme)?$theme:"basic",
     'themecolor' => isset($themecolor)?$themecolor:"blue",
@@ -103,8 +103,8 @@ $settings = array(
     'default_controller_auth' => isset($default_controller_auth)?$default_controller_auth:"feed",
     'default_action_auth' => isset($default_action_auth)?$default_action_auth:"list",
     'feedviewpath' => isset($feedviewpath)?$feedviewpath:"vis/auto?feedid=",
-    'enable_multi_user' => isset($enable_multi_user)?$enable_multi_user:false,
-    'enable_rememberme' => isset($enable_rememberme)?$enable_rememberme:true,
+    'enable_multi_user' => isset($enable_multi_user)?$enable_multi_user:true,
+    'enable_rememberme' => isset($enable_rememberme)?$enable_rememberme:false,
     'enable_password_reset' => isset($enable_password_reset)?$enable_password_reset:false,
     'enable_admin_ui' => isset($allow_emonpi_admin)?$allow_emonpi_admin:false,
     'enable_update_ui' => isset($admin_show_update)?$admin_show_update:true,

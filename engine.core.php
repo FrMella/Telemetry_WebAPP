@@ -20,6 +20,8 @@
 
 defined('Telemetry_ENGINE') or die('RESTRICTED ACCESS');
 
+
+
 function is_http_request() {
     if (server('HTTPS') == 'on') {
         return true;
@@ -60,6 +62,7 @@ function db_check($sql, $database){
         return false;
     }
 }
+
 
 function controller ($controller_name)
 {
@@ -209,9 +212,9 @@ function load_db_scheme(){
     $schema = array();
     $dir = scandir("ext_modules");
     for ($i=2; $i<count($dir); $i++) {
-        if (filetype("ext_modules/".$dir[$i])=='dir' || filetype("ext_modules/".$dir[$i])=='link') {
-            if (is_file("ext_modules/".$dir[$i]."/".$dir[$i]."_schema.php")) {
-                require "ext_modules/".$dir[$i]."/".$dir[$i]."_schema.php";
+        if (filetype("Ext_Modules/".$dir[$i])=='dir' || filetype("Ext_Modules/".$dir[$i])=='link') {
+            if (is_file("Ext_Modules/".$dir[$i]."/".$dir[$i]."_schema.php")) {
+                require "Ext_Modules/".$dir[$i]."/".$dir[$i]."_schema.php";
             }
         }
     }
@@ -224,11 +227,11 @@ function load_menu(){
     $dir = scandir("ext_modules");
     for ($i=2; $i<count($dir); $i++)
     {
-        if (filetype("ext_modules/".$dir[$i])=='dir' || filetype("ext_odules/".$dir[$i])=='link')
+        if (filetype("Ext_Modules/".$dir[$i])=='dir' || filetype("ext_odules/".$dir[$i])=='link')
         {
-            if (is_file("ext_modules/".$dir[$i]."/".$dir[$i]."_menu.php"))
+            if (is_file("Ext_Modules/".$dir[$i]."/".$dir[$i]."_menu.php"))
             {
-                require "ext_modules/".$dir[$i]."/".$dir[$i]."_menu.php";
+                require "Ext_Modules/".$dir[$i]."/".$dir[$i]."_menu.php";
             }
         }
     }
@@ -264,9 +267,9 @@ function system_error($message){
 function call_hook($function_name, $args) {
     $dir = scandir("ext_modules");
     for ($i=2; $i<count($dir); $i++) {
-        if (filetype("ext_modules/".$dir[$i])=='dir' || filetype("ext_modules/".$dir[$i])=='link') {
-            if (is_file("ext_modules/".$dir[$i]."/".$dir[$i]."_hooks.php")) {
-                require "ext_modules/".$dir[$i]."/".$dir[$i]."_hooks.php";
+        if (filetype("Ext_Modules/".$dir[$i])=='dir' || filetype("Ext_Modules/".$dir[$i])=='link') {
+            if (is_file("Ext_Modules/".$dir[$i]."/".$dir[$i]."_hooks.php")) {
+                require "Ext_Modules/".$dir[$i]."/".$dir[$i]."_hooks.php";
                 if (function_exists($dir[$i].'_'.$function_name)==true) {
                     $hook = $dir[$i].'_'.$function_name;
                     return $hook($args);

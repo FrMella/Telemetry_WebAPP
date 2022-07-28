@@ -28,6 +28,7 @@ class Route
         $relativeApplicationPath = str_replace($documentRoot, '', $absolutePath);
         if (!empty($relativeApplicationPath)) {
             $q = str_replace($relativeApplicationPath, '', $q);
+
         }
         $q = trim($q, '/');
         $q = preg_replace('/[^.\/_A-Za-z0-9-]/', '', $q);
@@ -66,6 +67,7 @@ class Route
             exit();
         }
     }
+
 
     public function isRouteNotDefined()
     {

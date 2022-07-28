@@ -40,7 +40,7 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
         var current_themecolor = "<?php echo $settings["interface"]["themecolor"]; ?>";
         var current_themesidebar = "dark";
     </script>
-    <script src="<?php echo $path; ?>Libraries/TelemetryApp-helper.js?v=<?php echo $v; ?>"></script>
+    <script src="<?php echo $path; ?>Libraries/AppTelemetry-helper.js?v=<?php echo $v; ?>"></script>
     <?php echo $svg_icons; ?>
 
 </head>
@@ -93,11 +93,11 @@ if (!in_array($settings["interface"]["themecolor"], ["blue","sun","yellow2","sta
     </main>
 </div>
 <div id="footer">
-    <?php echo dgettext('theme_messages','Powered by'); ?>&nbsp;<a href="http://www.Telemetry.org.nz" target="_blank" rel="noopener">Telemetry Institute</a>
+    <?php echo dgettext('theme_messages','Powered by'); ?>&nbsp;<a href="http://francisco.mella.nz" target="_blank" rel="noopener">Telemetry APP v1.45</a>
     <span> | <a href="https://www.Telemetry.org.nz" target="_blank" rel="noopener"><?php echo $Telemetry_version; ?></a></span>
 </div>
 
-<script type="text/javascript" src="<?php echo $path; ?>Lib/bootstrap/js/bootstrap.js?v=2"></script>
+<script type="text/javascript" src="<?php echo $path; ?>Libraries/bootstrap/js/bootstrap.js?v=2"></script>
 
 
 

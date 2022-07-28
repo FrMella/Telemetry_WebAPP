@@ -2,19 +2,19 @@
 
     
 $_settings = array(
-"domain" => false,
-"Telemetry_dir" => "/opt/emoncms",
-"TelemetryPi_dir" => "/opt/TelemetryPi",
-"display_errors" => true,
-"updatelogin" => false,
+    "domain" => false,
+    "emoncms_dir" => "/opt/emoncms",
+    "openenergymonitor_dir" => "/opt/openenergymonitor",
+    "display_errors" => true,
+    "updatelogin" => false,
 
 // mysql parametros de configuracion standard
 // Mysql database settings
 "sql"=>array(
     "server"   => "localhost",
     "database" => "emoncms",
-    "username" => "emoncms",
-    "password" => "password",
+    "username" => "_DB_USER_",
+    "password" => "_DB_PASSWORD_",
     "port"     => 3306,
     "dbtest"   => true
 ),

@@ -14,7 +14,7 @@ if(!document.currentScript) {
 }
 
 var path = (function() {
-    const filePath = "libraries/Telemetry-helper.js"
+    const filePath = "Libraries/AppTelemetry-helper.js"
     var _path = document.currentScript.dataset.path
 
     function getPathFromScript(src) {
